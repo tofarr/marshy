@@ -148,3 +148,15 @@ is responsible for this, and means types can
 Circular references within objects will still cause an error.
 (Unless you decide on an error handling protocol for this an 
 implement a custom Factory to deal with it!)
+
+## Building The Project
+
+You need an account on pypi before this will work:
+
+```
+pip install setuptools wheel
+python setup.py sdist bdist_wheel
+pip install twine
+python -m twine upload dist/*
+
+```

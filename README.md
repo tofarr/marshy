@@ -1,4 +1,4 @@
-# Marsha - Better Marshalling for Python.
+# Marshy - Better Marshalling for Python.
 
 This project is a general purpose externalizer for python objects.
 (Like Marshmallow or Pedantic) The guiding philosophy is convention
@@ -158,5 +158,4 @@ pip install setuptools wheel
 python setup.py sdist bdist_wheel
 pip install twine
 python -m twine upload dist/*
-
 ```

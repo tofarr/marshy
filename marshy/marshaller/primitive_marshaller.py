@@ -8,7 +8,7 @@ class PrimitiveMarshaller(MarshallerABC[ExternalType]):
     """
 
     def load(self, item: ExternalType) -> ExternalType:
-        return self.marshalled_type(item)
+        return None if item is None else self.marshalled_type(item)
 
     def dump(self, item: ExternalType) -> ExternalType:
         return item

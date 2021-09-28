@@ -1,4 +1,4 @@
-from marshy.marshaller.NoOpMarshaller import NoOpMarshaller
+from marshy.marshaller.no_op_marshaller import NoOpMarshaller
 from marshy.marshaller.bool_marshaller import BoolMarshaller
 from marshy.marshaller.primitive_marshaller import PrimitiveMarshaller
 

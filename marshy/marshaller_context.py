@@ -19,8 +19,9 @@ class MarshallerContext:
         self._factories.append(marshaller_factory)
         self._factories = sorted(self._factories or [], reverse=True)
 
-    def register_marshaller(self, marshaller: marshaller_abc.MarshallerABC):
-        self._by_type[marshaller.marshalled_type] = marshaller
+    def register_marshaller(self, marshaller: marshaller_abc.MarshallerABC, type_: Type = None):
+        type_ = type_ or marshaller.marshalled_type
+        self._by_type[type_] = marshaller
 
     def get_marshaller(self, type_: Type) -> marshaller_abc.MarshallerABC:
         marshaller = self._by_type.get(type_)

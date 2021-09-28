@@ -39,6 +39,26 @@ result = marshy.load(Doohickey, dict(title='Thingy'))
 # result == Doohickey('Thingy', description=None, tags=[])
 ```
 
+## Custom properties
+
+Custom properties are also serialized by default. (If they
+have a setter, it is used when loading):
+
+```
+@dataclass
+class Factorial:
+  value: int
+  
+  @property
+  def factorial(self) -> int:
+    return reduce(lambda a, b: a*b, range(1, self.value+1))
+    
+factorial = Factorial(4)
+dumped = dump(factorial)
+# dumped == dict(value=4, factorial=24)
+loaded = load(Factorial, dumped)
+# loaded == factorial
+```
 
 ## Under The Hood
 
@@ -164,8 +184,8 @@ def new_marshy_context():
     return context
 ```
 
-On startup, Marshy will use this as the default rule configuration if
-the environment variable is set:
+On startup, if the environment variable is present, Marshy will
+use this as the default rule configuration:
 ```
 MARSHY_CONTEXT=my_app.my_config.new_marshy_context
 ```

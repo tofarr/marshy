@@ -22,6 +22,6 @@ def resolve_forward_refs(type_: Type) -> Type:
     import_module = '.'.join(import_path[:-1])
     if not import_module:
         raise MarshallError(f'InvalidForwardRef:{type_}:Use full module name!')
-    imported_module = importlib.import_module('.'.join(import_path[:-1]))
+    imported_module = importlib.import_module(import_module)
     return_type = getattr(imported_module, import_path[-1])
     return return_type

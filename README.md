@@ -190,6 +190,25 @@ use this as the default rule configuration:
 MARSHY_CONTEXT=my_app.my_config.new_marshy_context
 ```
 
+## Performance Tests
+
+Basic Tests show performance is approximate with marshmallow:
+
+```
+python -m timeit -s "
+from test.performance.marshy_performance import run
+run(1000)
+"
+```
+
+```
+python -m timeit -s "
+from test.performance.marshmallow_performance import run
+run(1000)
+"
+```
+
+
 ## Building The Project
 
 You need an account on pypi before this will work:

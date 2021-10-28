@@ -11,7 +11,7 @@ from marshy.marshaller_context import MarshallerContext
 from marshy.marshaller.primitive_marshaller import PrimitiveMarshaller
 
 
-def new_default_context():
+def new_default_context() -> MarshallerContext:
     context = MarshallerContext()
     for t in [float, int, str]:
         context.register_marshaller(PrimitiveMarshaller(t))

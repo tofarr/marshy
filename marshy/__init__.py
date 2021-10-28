@@ -1,5 +1,5 @@
 import os
-from typing import Type, Any, Optional
+from typing import Type, Any, Optional, ForwardRef
 import importlib
 
 from marshy.types import ExternalType
@@ -8,7 +8,7 @@ _default_context = None
 MARSHY_CONTEXT = 'MARSHY_CONTEXT'
 
 
-def get_default_context():
+def get_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerContext'):
     global _default_context
     if not _default_context:
         # Set up the default_context based on an environment variable

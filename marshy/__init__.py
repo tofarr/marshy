@@ -1,11 +1,12 @@
 import os
-from typing import Type, Any, Optional, ForwardRef
+from typing import Type, Any, Optional, ForwardRef, TypeVar
 import importlib
 
 from marshy.types import ExternalType
 
 _default_context = None
 MARSHY_CONTEXT = 'MARSHY_CONTEXT'
+T = TypeVar('T')
 
 
 def get_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerContext'):
@@ -21,7 +22,7 @@ def get_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerCon
     return _default_context
 
 
-def load(type_: Type, to_load: ExternalType):
+def load(type_: Type[T], to_load: ExternalType) -> T:
     return get_default_context().load(type_, to_load)
 
 

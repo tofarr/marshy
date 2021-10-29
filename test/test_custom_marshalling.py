@@ -26,7 +26,7 @@ class TestCustomMarshalling(TestCase):
         coords.add(Coordinate(1, 2))
         coords.add(Coordinate(1, 2))
         assert len(coords) == 1
-        assert str(Coordinate(1,2)) == '[1, 2]'
+        assert str(Coordinate(1, 2)) == '[1, 2]'
         assert Dataset([]).calculate_mean() is None
         assert Dataset([]).calculate_median() is None
         assert Dataset([1, 2]) != Coordinate(1, 2)
@@ -102,7 +102,7 @@ class DatasetMarshaller(MarshallerABC[Dataset]):
 
     def load(self, item: ExternalType) -> Dataset:
         """ Accept either a list of coordinates or a dict containing a list of coordinates """
-        if isinstance(item, list): # We accept a list of coordinates
+        if isinstance(item, list):  # We accept a list of coordinates
             coordinates = item
         else:
             coordinates = item['coords']

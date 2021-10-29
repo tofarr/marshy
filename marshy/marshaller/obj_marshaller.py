@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Set, Tuple, Optional
+from typing import TypeVar, Tuple, Optional
 
 from marshy.marshaller.marshaller_abc import MarshallerABC
 from marshy.types import ExternalType

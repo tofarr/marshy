@@ -77,6 +77,10 @@ class Dataset:
             return self.coordinates == other.coordinates
         return NotImplemented
 
+    @staticmethod
+    def __marshaller_factory__(cls):
+        return DatasetMarshaller()
+
 
 context = new_default_context()
 
@@ -117,4 +121,4 @@ class DatasetMarshaller(MarshallerABC[Dataset]):
 
 
 context.register_marshaller(CoordinateMarshaller())
-context.register_marshaller(DatasetMarshaller())
+#context.register_marshaller(DatasetMarshaller())

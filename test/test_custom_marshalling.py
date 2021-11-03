@@ -4,6 +4,7 @@ from unittest import TestCase
 from marshy import ExternalType
 from marshy.default_context import new_default_context
 from marshy.marshaller.marshaller_abc import MarshallerABC
+from marshy.marshaller_context import MarshallerContext
 
 
 class TestCustomMarshalling(TestCase):
@@ -78,7 +79,7 @@ class Dataset:
         return NotImplemented
 
     @staticmethod
-    def __marshaller_factory__(cls):
+    def __marshaller_factory__(cls, context: MarshallerContext):
         return DatasetMarshaller()
 
 
@@ -121,4 +122,3 @@ class DatasetMarshaller(MarshallerABC[Dataset]):
 
 
 context.register_marshaller(CoordinateMarshaller())
-#context.register_marshaller(DatasetMarshaller())

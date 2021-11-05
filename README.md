@@ -157,6 +157,41 @@ dumped = dump(Doohickey('Thingy'))
 # dumped == dict(title='Thingy', tags=False)
 ```
 
+## Customizing dataclass marshalling
+
+As an alternative to defining a custom marshaller / factory, it is possible to simply
+define a __marshaller_factory__ class method. (Note: this becomes the default for all
+contexts) Imagine a case where you have a dataclass representing a 2D point, which you
+want to be marshalled in the format [x, y] (An array rather than the standard object):
+```
+from dataclasses import dataclass
+from marshy.marshaller.marshaller_abc import MarshallerABC
+from marshy import load, dump
+
+@dataclass
+class Point:
+    x: float
+    y: float
+    
+    @classmethod
+    def __marshaller_factory__(cls, marshaller_context):
+       return PointMarshaller()
+       
+class PointMarshaller(MarshallerABC):
+
+    def __init__(self):
+        super().__init__(Point)
+
+    def load(self, item):
+        return Point(item[0], item[1])
+    
+    def dump(self, item):
+        return [item.x, item.y]
+        
+dumped = dump(Point(1.2, 3.4))
+loaded = load(Point, dumped)
+```
+
 ## Circular References
 
 Due to the fact that types in the object graph can self reference,

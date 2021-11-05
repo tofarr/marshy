@@ -78,8 +78,9 @@ class Dataset:
             return self.coordinates == other.coordinates
         return NotImplemented
 
-    @staticmethod
-    def __marshaller_factory__(cls, context: MarshallerContext):
+    # noinspection PyUnusedLocal
+    @classmethod
+    def __marshaller_factory__(cls, marshaller_context: MarshallerContext):
         return DatasetMarshaller()
 
 

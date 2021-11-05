@@ -17,4 +17,4 @@ class FactoryMarshallerFactory(MarshallerFactoryABC):
                type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
         factory = getattr(type_, MARSHALLER_FACTORY, None)
         if factory is not None:
-            return factory(type_, context)
+            return factory(context)

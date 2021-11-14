@@ -25,7 +25,7 @@ def new_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerCon
     modules.sort(key=lambda m: m.priority, reverse=True)
     for m in modules:
         getattr(m, 'configure')(default_context)
-        return default_context
+    return default_context
 
 
 def load(type_: Type[T], to_load: ExternalType) -> T:

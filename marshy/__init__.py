@@ -6,6 +6,7 @@ from marshy.types import ExternalType
 
 _default_context = None
 T = TypeVar('T')
+CONFIG_MODULE_PREFIX = 'marshy_config_'
 
 
 def get_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerContext'):
@@ -19,8 +20,7 @@ def new_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerCon
     from marshy.marshaller_context import MarshallerContext
     default_context = MarshallerContext()
     # Set up context based on naming convention
-    from marshy import config
-    module_info = pkgutil.iter_modules(config.__path__, config.__name__ + '.')
+    module_info = (m for m in pkgutil.iter_modules() if m.name.startswith(CONFIG_MODULE_PREFIX))
     modules = [importlib.import_module(m.name) for m in module_info]
     modules.sort(key=lambda m: m.priority, reverse=True)
     for m in modules:

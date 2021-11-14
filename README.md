@@ -206,9 +206,10 @@ implement a custom Factory to deal with it!)
 
 ## Customizing the default context
 
-The project uses namespace packages (https://packaging.python.org/guides/creating-and-discovering-plugins/) for
-configuration. Configuration modules should have an integer priority attribute, and a 
-`def configure(context: MarshallerContext)` function. e.g.: [default_config](marshy/config/default_config.py)
+The project uses the namespace convention `marshy_config_` to identity configuration packages.
+(https://packaging.python.org/guides/creating-and-discovering-plugins/). Configuration packages should have an integer
+priority attribute, and a  `def configure(context: MarshallerContext)` function. e.g.:
+[default_config](marshy_config_default/__init__.py)
 
 ## Performance Tests
 

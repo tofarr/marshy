@@ -204,26 +204,11 @@ Circular references within objects will still cause an error.
 (Unless you decide on an error handling protocol for this an 
 implement a custom Factory to deal with it!)
 
-## Customizing the default context with an environment variable
+## Customizing the default context
 
-Suppose you defined the following setup function int the directory
-`/my_app/my_config.py` (Along with the `__init__.py`):
-
-```
-from marshy.default_context import new_default_context
-
-def new_marshy_context():
-    context = new_default_context()
-    # context.register_marshaller( ... marshaller for some class that requires custom marshalling )
-    # context.register_factory( ... some factory for custom logic - maybe circular reference resolution? )
-    return context
-```
-
-On startup, if the environment variable is present, Marshy will
-use this as the default rule configuration:
-```
-MARSHY_CONTEXT=my_app.my_config.new_marshy_context
-```
+The project uses namespace packages (https://packaging.python.org/guides/creating-and-discovering-plugins/) for
+configuration. Configuration modules should have an integer priority attribute, and a 
+`def configure(context: MarshallerContext)` function. e.g.: [default_config](marshy/config/default_config.py)
 
 ## Performance Tests
 

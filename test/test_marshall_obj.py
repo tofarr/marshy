@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, Optional, List
 from unittest import TestCase
 
-from marshy import dump, load
-from marshy.default_context import new_default_context
+from marshy import dump, load, new_default_context
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller
 from marshy.marshaller import int_marshaller, str_marshaller, float_marshaller, bool_marshaller
 from marshy.marshaller.obj_marshaller import ObjMarshaller, attr_config

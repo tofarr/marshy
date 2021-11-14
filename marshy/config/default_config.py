@@ -6,14 +6,15 @@ from marshy.factory.factory_marshaller_factory import FactoryMarshallerFactory
 from marshy.factory.list_marshaller_factory import ListMarshallerFactory
 from marshy.factory.optional_marshaller_factory import OptionalMarshallerFactory
 from marshy.factory.union_marshaller_factory import UnionMarshallerFactory
-from marshy.marshaller import none_marshaller, bool_marshaller, datetime_marshaller
+from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller
 from marshy.marshaller.as_str_marshaller import AsStrMarshaller
+from marshy.marshaller.type_marshaller import TypeMarshaller
 from marshy.marshaller_context import MarshallerContext
-from marshy.marshaller.primitive_marshaller import PrimitiveMarshaller
+
+priority = 100
 
 
-def new_default_context() -> MarshallerContext:
-    context = MarshallerContext()
+def configure(context: MarshallerContext):
     for t in [float, int, str]:
         context.register_marshaller(PrimitiveMarshaller(t))
     for t in [UUID]:
@@ -27,4 +28,13 @@ def new_default_context() -> MarshallerContext:
     context.register_factory(ListMarshallerFactory())
     context.register_factory(FactoryMarshallerFactory())
     context.register_factory(DataclassMarshallerFactory())
-    return context
+    context.register_marshaller(new_type_marshaller())
+
+
+def new_type_marshaller():
+    type_marshaller = TypeMarshaller()
+    type_marshaller.register(int)
+    type_marshaller.register(str)
+    type_marshaller.register(bool)
+    type_marshaller.register(float)
+    return type_marshaller

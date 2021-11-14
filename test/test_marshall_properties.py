@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 from unittest import TestCase
 
-from marshy import load, dump, get_default_context
-from marshy.default_context import new_default_context
+from marshy import load, dump, get_default_context, new_default_context
 from marshy.errors import MarshallError
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller, skip
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller

@@ -1,25 +1,31 @@
-import os
+import pkgutil
 from typing import Type, Any, Optional, ForwardRef, TypeVar
 import importlib
 
 from marshy.types import ExternalType
 
 _default_context = None
-MARSHY_CONTEXT = 'MARSHY_CONTEXT'
 T = TypeVar('T')
 
 
 def get_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerContext'):
     global _default_context
     if not _default_context:
-        # Set up the default_context based on an environment variable
-        import_name = os.environ.get(MARSHY_CONTEXT, 'marshy.default_context.new_default_context')
-        import_path = import_name.split('.')
-        import_module = '.'.join(import_path[:-1])
-        imported_module = importlib.import_module(import_module)
-        marshy_context_fn = getattr(imported_module, import_path[-1])
-        _default_context = marshy_context_fn()
+        _default_context = new_default_context()
     return _default_context
+
+
+def new_default_context() -> ForwardRef('marshy.marshaller_context.MarshallerContext'):
+    from marshy.marshaller_context import MarshallerContext
+    default_context = MarshallerContext()
+    # Set up context based on naming convention
+    from marshy import config
+    module_info = pkgutil.iter_modules(config.__path__, config.__name__ + '.')
+    modules = [importlib.import_module(m.name) for m in module_info]
+    modules.sort(key=lambda m: m.priority, reverse=True)
+    for m in modules:
+        getattr(m, 'configure')(default_context)
+        return default_context
 
 
 def load(type_: Type[T], to_load: ExternalType) -> T:

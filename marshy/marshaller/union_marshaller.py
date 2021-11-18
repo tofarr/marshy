@@ -1,7 +1,9 @@
-from typing import TypeVar, Optional, Dict, Type, List
+from typing import TypeVar, Optional, Dict, Type, List, Iterable
 
 from marshy import ExternalType
+from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.marshaller_abc import MarshallerABC
+from marshy.marshaller_context import MarshallerContext
 
 T = TypeVar('T')
 
@@ -32,3 +34,9 @@ class UnionMarshaller(MarshallerABC[T]):
 
 def resolve_type(type_: Type) -> Type:
     return resolve_type(type_.__origin__) if hasattr(type_, '__origin__') else type_
+
+
+def implementation_marshaller(base_type: Type, impls: Iterable[Type], marshaller_context: MarshallerContext):
+    return UnionMarshaller(base_type, {
+        i.__name__: DeferredMarshaller[i](i, marshaller_context) for i in impls
+    })

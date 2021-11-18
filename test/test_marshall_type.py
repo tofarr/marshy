@@ -1,26 +1,35 @@
-from typing import Type
 from unittest import TestCase
 
-from marshy import new_default_context
+from marshy.errors import MarshallError
+from marshy.marshaller.type_marshaller import TypeMarshaller
+from test.test_marshall_properties import President
 
 
-class _UnknownType:
+class PermittedType:
     pass
 
 
-class TestMarshallIterable(TestCase):
+class TestMarshallType(TestCase):
 
     def test_marshall(self):
-        context = new_default_context()
-        assert context.dump(int, Type) == 'int'
-        assert context.load(Type, 'int') == int
+        marshaller = TypeMarshaller(permitted_prefixes=(__name__,), _names_to_types=dict(int=int, str=str))
+        assert marshaller.dump(int) == 'int'
+        assert marshaller.load('int') == int
+
+    def test_load_by_prefix(self):
+        marshaller = TypeMarshaller(permitted_prefixes=(__name__,))
+        assert marshaller.load(f'{__name__}.PermittedType') == PermittedType
+
+    def test_dump_by_prefix(self):
+        marshaller = TypeMarshaller(permitted_prefixes=(__name__,))
+        assert marshaller.dump(PermittedType) == f'{__name__}.PermittedType'
 
     def test_dump_unknown(self):
-        context = new_default_context()
-        with self.assertRaises(KeyError):
-            context.dump(_UnknownType, Type)
+        marshaller = TypeMarshaller(permitted_prefixes=(__name__,))
+        with self.assertRaises(MarshallError):
+            marshaller.dump(President)
 
     def test_load_unknown(self):
-        context = new_default_context()
-        with self.assertRaises(KeyError):
-            context.load(Type, '_UnknownType')
+        marshaller = TypeMarshaller(permitted_prefixes=(__name__,))
+        with self.assertRaises(MarshallError):
+            marshaller.load('some.Unknown')

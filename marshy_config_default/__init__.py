@@ -32,9 +32,5 @@ def configure(context: MarshallerContext):
 
 
 def new_type_marshaller():
-    type_marshaller = TypeMarshaller()
-    type_marshaller.register(int)
-    type_marshaller.register(str)
-    type_marshaller.register(bool)
-    type_marshaller.register(float)
+    type_marshaller = TypeMarshaller(tuple('builtins.'))
     return type_marshaller

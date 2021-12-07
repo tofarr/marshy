@@ -8,7 +8,6 @@ from marshy.factory.optional_marshaller_factory import OptionalMarshallerFactory
 from marshy.factory.union_marshaller_factory import UnionMarshallerFactory
 from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller, NoOpMarshaller
 from marshy.marshaller.as_str_marshaller import AsStrMarshaller
-from marshy.marshaller.type_marshaller import TypeMarshaller
 from marshy.marshaller_context import MarshallerContext
 from marshy.types import ExternalItemType, ExternalType
 

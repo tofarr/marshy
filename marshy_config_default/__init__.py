@@ -8,6 +8,7 @@ from marshy.factory.optional_marshaller_factory import OptionalMarshallerFactory
 from marshy.factory.union_marshaller_factory import UnionMarshallerFactory
 from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller, NoOpMarshaller
 from marshy.marshaller.as_str_marshaller import AsStrMarshaller
+from marshy.marshaller.json_str_marshaller import JsonStrMarshaller
 from marshy.marshaller_context import MarshallerContext
 from marshy.types import ExternalItemType, ExternalType
 
@@ -28,5 +29,6 @@ def configure(context: MarshallerContext):
     context.register_factory(ListMarshallerFactory())
     context.register_factory(FactoryMarshallerFactory())
     context.register_factory(DataclassMarshallerFactory())
-    context.register_marshaller(NoOpMarshaller(ExternalType))
-    context.register_marshaller(NoOpMarshaller(ExternalItemType))
+    context.register_marshaller(JsonStrMarshaller(ExternalType))
+    context.register_marshaller(JsonStrMarshaller(ExternalItemType))
+

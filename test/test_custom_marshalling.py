@@ -110,6 +110,7 @@ class DatasetMarshaller(MarshallerABC[Dataset]):
         if isinstance(item, list):  # We accept a list of coordinates
             coordinates = item
         else:
+            # noinspection PyTypeChecker
             coordinates = item['coords']
         return Dataset(context.load(List[Coordinate], coordinates))
 

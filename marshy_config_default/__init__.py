@@ -6,7 +6,7 @@ from marshy.factory.factory_marshaller_factory import FactoryMarshallerFactory
 from marshy.factory.list_marshaller_factory import ListMarshallerFactory
 from marshy.factory.optional_marshaller_factory import OptionalMarshallerFactory
 from marshy.factory.union_marshaller_factory import UnionMarshallerFactory
-from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller, NoOpMarshaller
+from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller
 from marshy.marshaller.as_str_marshaller import AsStrMarshaller
 from marshy.marshaller.json_str_marshaller import JsonStrMarshaller
 from marshy.marshaller_context import MarshallerContext

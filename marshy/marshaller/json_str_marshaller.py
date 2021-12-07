@@ -1,8 +1,6 @@
 import json
-from dataclasses import dataclass
 from typing import TypeVar
 
-from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
 T = TypeVar('T')

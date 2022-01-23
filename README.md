@@ -211,6 +211,49 @@ The project uses the namespace convention `marshy_config_` to identity configura
 priority attribute, and a  `def configure(context: MarshallerContext)` function. e.g.:
 [default_config](marshy_config_default/__init__.py)
 
+## Adding Polymorphic Implementations
+
+Taking the following polymorphic classes where `Pet` has implementations `Cat` and `Dog`:
+
+```
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
+@dataclass
+class PetAbc(ABC):
+    name: str
+
+    @abstractmethod
+    def vocalize(self) -> str:
+        """ What sound does this make? """
+
+
+class Cat(PetAbc):
+
+    def vocalize(self):
+        return "Meow!"
+
+
+class Dog(PetAbc):
+
+    def vocalize(self) -> str:
+        return "Woof!"
+```
+
+In order to deserialize a Pet, marshy needs to be informed tha the implementations exist. This can be done at any point 
+in the configuration:
+
+```
+from marshy import load
+from marshy.factory.impl_marshaller_factory import register_impl
+register_impl(PetAbc, Cat)
+register_impl(PetAbc, Dog)
+pet = ['Cat', dict(name='Felix')]
+loaded = load(PetAbc, pet)
+```
+
+[Tests for this are here] (test/test_impl_marshaller.py)
+
 ## Performance Tests
 
 Basic Tests show performance is approximate with marshmallow:

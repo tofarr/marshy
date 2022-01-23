@@ -7,10 +7,12 @@ _MarshallerContext = 'marshy.marshaller_context.MarshallerContext'
 _MarshallerABC = 'marshy.marshaller_abc.MarshallerABC'
 
 
-@dataclass
 @total_ordering
 class MarshallerFactoryABC(ABC):
-    priority: int = 0
+
+    @property
+    def priority(self) -> int:
+        return 0
 
     def __ne__(self, other):
         return self.priority != getattr(other, 'priority', None)

@@ -28,9 +28,25 @@ class TestFactoryOrdering(TestCase):
         assert a.__ne__(b)
         assert a.__eq__(a)
 
+    def test_abc_methods(self):
+        a = DummyFactory2()
+        assert a.create(None, None) is None
+        assert a.priority == 0
+        assert not a.__ne__(DummyFactory2())
+
 
 @dataclass
 class DummyFactory(MarshallerFactoryABC):
+    priority: int = 0
+
+    def create(self,
+               context: MarshallerContext,
+               type_: Type
+               ) -> Optional[MarshallerABC]:
+        return None
+
+
+class DummyFactory2(MarshallerFactoryABC):
 
     def create(self,
                context: MarshallerContext,

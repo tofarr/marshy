@@ -1,7 +1,8 @@
-from typing import Type, Optional, Dict, Any
+from typing import Type, Optional, Dict, Any, Iterator
 
 from marshy.errors import MarshallError
 from marshy.factory import marshaller_factory_abc
+from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller import marshaller_abc
 from marshy.types import ExternalType
 from marshy.utils import resolve_forward_refs
@@ -47,3 +48,6 @@ class MarshallerContext:
         marshaller = self.get_marshaller(type_)
         dumped = marshaller.dump(obj)
         return dumped
+
+    def get_factories(self) -> Iterator[MarshallerFactoryABC]:
+        return iter(self._factories)

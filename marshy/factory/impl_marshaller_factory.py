@@ -21,7 +21,7 @@ class ImplMarshallerFactory(MarshallerFactoryABC):
                context: marshaller_context.MarshallerContext,
                type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
         if type_ is self.base:
-            marshallers = {name_for_type(t): DeferredMarshaller(t, context) for t in self.impls}
+            marshallers = {name_for_type(t): DeferredMarshaller[t](t, context) for t in self.impls}
             return UnionMarshaller[self.base](self.base, marshallers)
 
     def add_impl(self, impl):

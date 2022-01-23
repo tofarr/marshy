@@ -30,6 +30,7 @@ class TestFactoryOrdering(TestCase):
 
     def test_abc_methods(self):
         a = DummyFactory2()
+        # noinspection PyTypeChecker
         assert a.create(None, None) is None
         assert a.priority == 0
         assert not a.__ne__(DummyFactory2())

@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
-from typing import List, Union
+from typing import List
 from unittest import TestCase
 
 from marshy import dump, load, new_default_context

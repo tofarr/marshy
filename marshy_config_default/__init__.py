@@ -5,6 +5,7 @@ from marshy.factory.enum_marshaller_factory import EnumMarshallerFactory
 from marshy.factory.factory_marshaller_factory import FactoryMarshallerFactory
 from marshy.factory.list_marshaller_factory import ListMarshallerFactory
 from marshy.factory.optional_marshaller_factory import OptionalMarshallerFactory
+from marshy.factory.tuple_marshaller_factory import TupleMarshallerFactory
 from marshy.factory.union_marshaller_factory import UnionMarshallerFactory
 from marshy.marshaller import PrimitiveMarshaller, none_marshaller, bool_marshaller, datetime_marshaller
 from marshy.marshaller.as_str_marshaller import AsStrMarshaller
@@ -29,6 +30,7 @@ def configure(context: MarshallerContext):
     context.register_factory(ListMarshallerFactory())
     context.register_factory(FactoryMarshallerFactory())
     context.register_factory(DataclassMarshallerFactory())
+    context.register_factory(TupleMarshallerFactory())
     context.register_marshaller(JsonStrMarshaller(ExternalType))
     context.register_marshaller(JsonStrMarshaller(ExternalItemType))
 

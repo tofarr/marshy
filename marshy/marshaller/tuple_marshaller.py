@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Iterable, List, Callable, Iterator
+from typing import TypeVar, Iterable, List, Tuple
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
@@ -8,17 +8,16 @@ T = TypeVar('T')
 
 
 @dataclass(frozen=True)
-class IterableMarshaller(MarshallerABC[Iterable[T]]):
+class TupleMarshaller(MarshallerABC[Iterable[T]]):
     """
     Marshaller for iterable types (lists)
     """
-    item_marshaller: MarshallerABC[T]
-    constructor: Callable[[Iterator[T]], Iterable[T]] = list
+    item_marshallers: Tuple[MarshallerABC[T], ...]
 
     def load(self, item: List[ExternalType]) -> Iterable[T]:
-        loaded = self.constructor(self.item_marshaller.load(i) for i in item)
+        loaded = tuple(m.load(i) for m, i in zip(self.item_marshallers, item))
         return loaded
 
     def dump(self, item: Iterable[T]) -> List[ExternalType]:
-        dumped = [self.item_marshaller.dump(i) for i in item]
+        dumped = [m.dump(i) for m, i in zip(self.item_marshallers, item)]
         return dumped

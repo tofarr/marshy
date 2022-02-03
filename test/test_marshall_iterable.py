@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Set
 from unittest import TestCase
 
 from marshy import dump, load
@@ -11,6 +11,12 @@ class TestMarshallIterable(TestCase):
         values = list(range(10))
         dumped = dump(values, List[int])
         loaded = load(List[int], dumped)
+        assert values == loaded
+
+    def test_marshall_set(self):
+        values = set(range(10))
+        dumped = dump(values, Set[int])
+        loaded = load(Set[int], dumped)
         assert values == loaded
 
     def test_dump(self):

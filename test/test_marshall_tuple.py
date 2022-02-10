@@ -1,4 +1,4 @@
-from typing import List, Union, Tuple
+from typing import Tuple
 from unittest import TestCase
 
 from marshy import dump, load

@@ -52,6 +52,7 @@ class TestMarshallObj(TestCase):
         dumped = marshaller.dump(value)
         assert 'n' not in dumped
         loaded = marshaller.load(dumped)
+        del value['n']
         assert loaded == value
 
     def test_marshall_no_filter_none(self):

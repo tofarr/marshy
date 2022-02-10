@@ -35,8 +35,8 @@ class ObjMarshaller(MarshallerABC[T]):
     def load(self, item: ExternalType) -> T:
         kwargs = {}
         for a in self.attr_configs:
-            if a.load:
-                external_value = item.get(a.external_name)
+            if a.load and a.external_name in item:
+                external_value = item[a.external_name]
                 value = a.marshaller.load(external_value)
                 kwargs[a.internal_name] = value
         loaded = self.marshalled_type(**kwargs)

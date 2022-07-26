@@ -1,6 +1,6 @@
 import dataclasses
 import inspect
-from typing import Type, Optional, List
+from typing import Type, Optional, List, get_type_hints
 
 from marshy import marshaller_context
 from marshy.errors import MarshallError
@@ -35,10 +35,11 @@ def get_property_configs_for_type(type_: Type,
         if skip(name, include, exclude):
             continue
         prop = p[1]
-        get_sig = inspect.signature(prop.fget)
-        prop_type = get_sig.return_annotation
-        if prop_type == inspect.Signature.empty:
+        type_hints = get_type_hints(prop.fget)
+        if 'return' not in type_hints:
             raise MarshallError(f'UnannotatedProperty:{type_}:{name}')
+        prop_type = type_hints.get('return')
+
         prop_type = resolve_forward_refs(prop_type)
         marshaller = DeferredMarshaller[prop_type](prop_type, context)
         property_config = PropertyConfig(name, marshaller, prop, load=bool(prop.fset))
@@ -60,8 +61,14 @@ def get_attr_configs_for_type(type_: Type,
                               exclude: Optional[List[str]] = None):
     # noinspection PyDataclass
     fields: List[dataclasses.Field] = dataclasses.fields(type_)
-    attr_configs = [attr_config(internal_name=f.name, marshaller=DeferredMarshaller(f.type, context))
-                    for f in fields if not skip(f.name, include, exclude)]
+    try:
+        types = get_type_hints(type_, globalns=None, localns=None)
+        attr_configs = [attr_config(internal_name=f.name, marshaller=DeferredMarshaller(types[f.name], context))
+                        for f in fields if not skip(f.name, include, exclude)]
+    except NameError:
+        # Still supporting old style forward refs without futures...
+        attr_configs = [attr_config(internal_name=f.name, marshaller=DeferredMarshaller(f.type, context))
+                        for f in fields if not skip(f.name, include, exclude)]
     return attr_configs
 
 

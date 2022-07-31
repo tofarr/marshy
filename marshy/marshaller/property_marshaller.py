@@ -15,7 +15,7 @@ class PropertyConfig:
     prop: property
     load: bool = True
     dump: bool = True
-    filter_dumped_values: Tuple = (None,)
+    exclude_dumped_values: Tuple = ()
 
 
 class PropertyMarshaller(MarshallerABC[T]):
@@ -42,7 +42,7 @@ class PropertyMarshaller(MarshallerABC[T]):
         for property_config in self.property_configs:
             if property_config.dump:
                 value = property_config.prop.fget(item)
-                if value not in property_config.filter_dumped_values:
+                if value not in property_config.exclude_dumped_values:
                     external_value = property_config.marshaller.dump(value)
                     dumped[property_config.external_name] = external_value
         return dumped

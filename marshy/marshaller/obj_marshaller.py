@@ -14,7 +14,7 @@ class AttrConfig:
     marshaller: MarshallerABC
     load: bool
     dump: bool
-    exclude_dumped_values: Tuple = (None,)
+    exclude_dumped_values: Tuple = ()
 
 
 def attr_config(marshaller: MarshallerABC,

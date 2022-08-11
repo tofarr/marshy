@@ -4,7 +4,7 @@ from typing import List
 from unittest import TestCase
 
 from marshy import dump, load, new_default_context
-from marshy.factory.impl_marshaller_factory import register_impl
+from marshy.factory.impl_marshaller_factory import register_impl, get_impls
 
 
 @dataclass
@@ -51,3 +51,9 @@ class TestImplMarshaller(TestCase):
         assert pets == loaded
         vocalizations = [p.vocalize() for p in loaded]
         assert ['Meow!', 'Woof!'] == vocalizations
+
+    def test_get_impls(self):
+        register_impl(PetAbc, Cat)
+        register_impl(PetAbc, Dog)
+        impls = get_impls(PetAbc)
+        self.assertEqual({Cat, Dog}, impls)

@@ -38,3 +38,11 @@ def register_impl(base, impl, context: Optional[marshaller_context.MarshallerCon
     factory = ImplMarshallerFactory(base)
     factory.add_impl(impl)
     context.register_factory(factory)
+
+
+def get_impls(base: Type, context: Optional[marshaller_context.MarshallerContext] = None) -> Set[Type]:
+    if context is None:
+        context = get_default_context()
+    for factory in context.get_factories():
+        if isinstance(factory, ImplMarshallerFactory) and factory.base == base:
+            return set(factory.impls)

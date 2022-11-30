@@ -16,7 +16,7 @@ from marshy.utils import resolve_forward_refs
 @dataclasses.dataclass
 class DataclassMarshallerFactory(MarshallerFactoryABC):
     priority: int = 100
-    exclude_dumped_values: Tuple = (None,)
+    exclude_dumped_values: Tuple = tuple()
 
     def create(self,
                context: marshaller_context.MarshallerContext,
@@ -30,7 +30,7 @@ def get_property_configs_for_type(type_: Type,
                                   context: MarshallerContext,
                                   include: Optional[List[str]] = None,
                                   exclude: Optional[List[str]] = None,
-                                  exclude_dumped_values: Tuple = (None,)):
+                                  exclude_dumped_values: Tuple = DataclassMarshallerFactory.exclude_dumped_values):
     property_configs = []
     for p in inspect.getmembers(type_, lambda o: isinstance(o, property)):
         name = p[0]

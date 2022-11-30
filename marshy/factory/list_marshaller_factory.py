@@ -19,7 +19,7 @@ class ListMarshallerFactory(MarshallerFactoryABC):
                context: marshaller_context.MarshallerContext,
                type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
-        if origin in (list, set):
+        if origin in (list, set, frozenset):
             item_type = typing_inspect.get_args(type_)[0]
             item_marshaller = DeferredMarshaller(item_type, context)
             marshaller = IterableMarshaller[item_type](type_, item_marshaller, origin)

@@ -46,7 +46,7 @@ class TestMarshallProperties(TestCase):
     def test_property_marshalling(self):
         fdr = President('Franklin Delano Roosevelt')
         dumped = dump(fdr)
-        assert dumped == dict(initials='FDR', name='Franklin Delano Roosevelt')
+        assert dumped == dict(initials='FDR', name='Franklin Delano Roosevelt', dob=None)
         loaded = load(President, dumped)
         assert loaded == fdr
 
@@ -76,7 +76,7 @@ class TestMarshallProperties(TestCase):
             ]
         )
         context.register_marshaller(marshaller)
-        unannotated = dict(typeless=dict(name='John Fitzgerald Kennedy'))
+        unannotated = dict(typeless=dict(name='John Fitzgerald Kennedy', dob=None))
         loaded = context.load(Unannotated, unannotated)
         dumped = context.dump(loaded)
         unannotated['typeless']['initials'] = 'JFK'

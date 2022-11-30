@@ -30,7 +30,7 @@ Marshall data with:
 ```
 import marshy
 result = marshy.dump(Doohickey('Thingy', tags=['a','b']))
-# result == dict(title='Thingy', tags=['a','b'])
+# result == dict(title='Thingy', description=None, tags=['a','b'])
 ```
 
 Unmarshall data with:

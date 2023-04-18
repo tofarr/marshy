@@ -18,16 +18,16 @@ class EnumMarshaller(MarshallerABC[T]):
 
     def load(self, item: Union[str, int, float]) -> T:
         try:
-            loaded = self.marshalled_type(item)
+            loaded = self.marshalled_type[item]
             return loaded
-        except ValueError as e:
+        except KeyError as e:
             if self.allow_unknown:
                 pseudo_member = generate_pseudo_member(self.marshalled_type, item)
                 return pseudo_member
             raise MarshallError(e)
 
     def dump(self, item: T) -> Union[str, int, float]:
-        dumped = item.value
+        dumped = item.name
         return dumped
 
 

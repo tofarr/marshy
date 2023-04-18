@@ -16,7 +16,7 @@ class TestMarshallEnum(TestCase):
 
     def test_marshall(self):
         dumped = dump(VehicleTypes.CAR)
-        assert VehicleTypes.CAR.value == dumped
+        assert VehicleTypes.CAR.name == dumped
         loaded = load(VehicleTypes, dumped)
         assert VehicleTypes.CAR == loaded
 
@@ -31,4 +31,4 @@ class TestMarshallEnum(TestCase):
         assert loaded.value == 'spaceship'
         assert loaded.__class__ == VehicleTypes
         dumped = marshaller.dump(loaded)
-        assert dumped == 'spaceship'
+        assert dumped == 'INVALID_VALUE__SPACESHIP'

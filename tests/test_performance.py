@@ -20,8 +20,8 @@ class TestMarshallUuid(TestCase):
     """
 
     def test_marshall(self):
-        from test.performance import marshmallow_performance
-        from test.performance import marshy_performance
+        from tests.performance import marshmallow_performance
+        from tests.performance import marshy_performance
 
         marshmallow_performance.run()
         marshy_performance.run()

@@ -1,17 +1,15 @@
 from typing import Union, Optional, Dict
 from unittest import TestCase
 
-from marshy import __version__
 from marshy.errors import MarshallError
 from marshy.utils import resolve_forward_refs
-import test
+import tests
 
 
 class TestResolveForwardRefs(TestCase):
     def test_one_hundred_percent(self):
         # Mostly because I want 100% test coverage
-        assert __version__ is not None
-        assert test is not None
+        assert tests is not None
 
     def test_type_hints(self):
         array = [int, str, bool, float, list, dict]

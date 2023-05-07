@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from marshy.errors import MarshallError
 from marshy.marshaller.type_marshaller import TypeMarshaller
-from test.test_marshall_properties import President
+from tests.test_marshall_properties import President
 
 
 class PermittedType:

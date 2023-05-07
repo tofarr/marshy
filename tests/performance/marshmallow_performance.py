@@ -1,5 +1,5 @@
 import marshmallow_dataclass
-from test.performance.fixtures import Product, product
+from tests.performance.fixtures import Product, product
 
 
 def run(iterations: int = 10):

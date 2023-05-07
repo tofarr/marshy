@@ -273,7 +273,7 @@ run(1000)
 ```
 
 
-## Release Proceedure
+## Release Procedure
 
 ![status](https://github.com/tofarr/marshy/actions/workflows/quality.yml/badge.svg?branch=main)
 

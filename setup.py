@@ -15,14 +15,17 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/tofarr/marshy",
     packages=setuptools.find_packages(include=["marshy*"]),
-    install_requires=["typing-inspect~=0.7", "black"],
-    setup_requires=[
-        "black~=23.3",
-        "marshmallow-dataclass~=8.5",
-        "pytest~=7.2",
-        "pytest-cov~=4.0",
-        "pytest-xdist~=3.2",
-    ],
+    install_requires=["typing-inspect~=0.7"],
+    extras_require={
+        "dev": [
+            "black~=23.3",
+            "marshmallow-dataclass~=8.5",
+            "pytest~=7.2",
+            "pytest-cov~=4.0",
+            "pytest-xdist~=3.2",
+            "pylint~=2.17",
+        ],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

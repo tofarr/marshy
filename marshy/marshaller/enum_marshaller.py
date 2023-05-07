@@ -25,13 +25,14 @@ class EnumMarshaller(MarshallerABC[T]):
             if self.allow_unknown:
                 pseudo_member = generate_pseudo_member(self.marshalled_type, item)
                 return pseudo_member
-            raise MarshallError(e)
+            raise MarshallError(e) from e
 
     def dump(self, item: T) -> Union[str, int, float]:
         dumped = item.name
         return dumped
 
 
+# pylint: disable=W0212
 def generate_pseudo_member(enum: T, value: Union[str, int, float]):
     pseudo_member = object.__new__(enum)
     pseudo_member._name_ = f"{ERROR_PREFIX}{str(value).upper()}"

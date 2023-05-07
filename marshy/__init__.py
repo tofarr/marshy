@@ -9,6 +9,7 @@ T = TypeVar("T")
 CONFIG_MODULE_PREFIX = "marshy_config_"
 
 
+# pylint: disable=W0603
 def get_default_context() -> ForwardRef("marshy.marshaller_context.MarshallerContext"):
     global _default_context
     if not _default_context:
@@ -17,6 +18,7 @@ def get_default_context() -> ForwardRef("marshy.marshaller_context.MarshallerCon
 
 
 def new_default_context() -> ForwardRef("marshy.marshaller_context.MarshallerContext"):
+    # pylint: disable=C0415
     from marshy.marshaller_context import MarshallerContext
 
     default_context = MarshallerContext()

@@ -13,14 +13,16 @@ from marshy.marshaller.optional_marshaller import OptionalMarshaller
 class OptionalMarshallerFactory(MarshallerFactoryABC):
     priority: int = 100
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin == Union:
             optional_type = get_optional_type(type_)
             if optional_type:
-                return OptionalMarshaller[optional_type](context.get_marshaller(optional_type))
+                return OptionalMarshaller[optional_type](
+                    context.get_marshaller(optional_type)
+                )
 
 
 def get_optional_type(type_: Type) -> Optional[Type]:

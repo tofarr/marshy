@@ -8,7 +8,7 @@ from marshy.marshaller import marshaller_abc
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.union_marshaller import UnionMarshaller
 
-MARSHALLER_FACTORY = '__marshaller_factory__'
+MARSHALLER_FACTORY = "__marshaller_factory__"
 
 
 @dataclass
@@ -17,18 +17,22 @@ class ImplMarshallerFactory(MarshallerFactoryABC):
     impls: Set[Type] = field(default_factory=set)
     priority: int = 110
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         if type_ is self.base:
-            marshallers = {name_for_type(t): DeferredMarshaller[t](t, context) for t in self.impls}
+            marshallers = {
+                name_for_type(t): DeferredMarshaller[t](t, context) for t in self.impls
+            }
             return UnionMarshaller[self.base](self.base, marshallers)
 
     def add_impl(self, impl):
         self.impls.add(impl)
 
 
-def register_impl(base, impl, context: Optional[marshaller_context.MarshallerContext] = None):
+def register_impl(
+    base, impl, context: Optional[marshaller_context.MarshallerContext] = None
+):
     if context is None:
         context = get_default_context()
     for factory in context.get_factories():
@@ -40,7 +44,9 @@ def register_impl(base, impl, context: Optional[marshaller_context.MarshallerCon
     context.register_factory(factory)
 
 
-def get_impls(base: Type, context: Optional[marshaller_context.MarshallerContext] = None) -> Set[Type]:
+def get_impls(
+    base: Type, context: Optional[marshaller_context.MarshallerContext] = None
+) -> Set[Type]:
     if context is None:
         context = get_default_context()
     for factory in context.get_factories():

@@ -13,11 +13,11 @@ from marshy.marshaller.iterable_marshaller import IterableMarshaller
 @dataclass
 class ListMarshallerFactory(MarshallerFactoryABC):
     priority: int = 100
-    type_name_attr: str = '__type__'
+    type_name_attr: str = "__type__"
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin in (list, set, frozenset):
             item_type = typing_inspect.get_args(type_)[0]

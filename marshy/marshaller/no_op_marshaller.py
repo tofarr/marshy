@@ -6,6 +6,7 @@ class NoOpMarshaller(MarshallerABC[ExternalType]):
     """
     Marshaller for NoOps (Mainly None)
     """
+
     def load(self, item: ExternalType) -> ExternalType:
         return item
 

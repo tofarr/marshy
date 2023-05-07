@@ -14,8 +14,8 @@ class EnumMarshallerFactory(MarshallerFactoryABC):
     priority: int = 100
     allow_unknown: bool = False
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         if inspect.isclass(type_) and issubclass(type_, Enum):
             return EnumMarshaller[type_](type_, self.allow_unknown)

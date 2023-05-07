@@ -5,7 +5,7 @@ from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 from marshy.types import ExternalItemType
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)
@@ -22,8 +22,11 @@ class PropertyMarshaller(MarshallerABC[T]):
     """
     Marshaller which wraps another and uses property setters / getters.
     """
+
     # noinspection PyDataclass
-    def __init__(self, marshaller: MarshallerABC[T], property_configs: Tuple[PropertyConfig]):
+    def __init__(
+        self, marshaller: MarshallerABC[T], property_configs: Tuple[PropertyConfig]
+    ):
         super().__init__(marshaller.marshalled_type)
         self.marshaller = marshaller
         self.property_configs = property_configs

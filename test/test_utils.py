@@ -8,7 +8,6 @@ import test
 
 
 class TestResolveForwardRefs(TestCase):
-
     def test_one_hundred_percent(self):
         # Mostly because I want 100% test coverage
         assert __version__ is not None
@@ -23,9 +22,9 @@ class TestResolveForwardRefs(TestCase):
 
     def test_invalid_import_module(self):
         with self.assertRaises(MarshallError):
-            resolve_forward_refs(Optional['NotARealClassName'])
+            resolve_forward_refs(Optional["NotARealClassName"])
 
     def test_dict(self):
-        type_ = Dict[str, 'unittest.TestCase']
+        type_ = Dict[str, "unittest.TestCase"]
         type_ = resolve_forward_refs(type_)
         assert type_ == Dict[str, TestCase]

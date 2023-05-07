@@ -4,7 +4,7 @@ from typing import TypeVar, Tuple, Optional
 from marshy.marshaller.marshaller_abc import MarshallerABC
 from marshy.types import ExternalType
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)
@@ -17,15 +17,19 @@ class AttrConfig:
     exclude_dumped_values: Tuple = ()
 
 
-def attr_config(marshaller: MarshallerABC,
-                internal_name: str,
-                external_name: Optional[str] = None,
-                load: bool = True,
-                dump: bool = True,
-                exclude_dumped_values: Tuple = tuple()) -> AttrConfig:
+def attr_config(
+    marshaller: MarshallerABC,
+    internal_name: str,
+    external_name: Optional[str] = None,
+    load: bool = True,
+    dump: bool = True,
+    exclude_dumped_values: Tuple = tuple(),
+) -> AttrConfig:
     if external_name is None:
         external_name = internal_name
-    return AttrConfig(internal_name, external_name, marshaller, load, dump, exclude_dumped_values)
+    return AttrConfig(
+        internal_name, external_name, marshaller, load, dump, exclude_dumped_values
+    )
 
 
 @dataclass(frozen=True)
@@ -43,9 +47,11 @@ class ObjMarshaller(MarshallerABC[T]):
         return loaded
 
     def dump(self, item: T) -> ExternalType:
-        if hasattr(item, 'get'):
+        if hasattr(item, "get"):
+
             def getter(obj, key):
                 return obj.get(key)
+
         else:
             getter = getattr
 

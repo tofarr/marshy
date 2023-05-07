@@ -9,18 +9,23 @@ from marshy.utils import resolve_forward_refs
 
 
 class MarshallerContext:
-
-    def __init__(self,
-                 factories: Optional[marshaller_factory_abc.MarshallerFactoryABC] = None,
-                 by_type: Optional[Dict[Type, marshaller_abc.MarshallerABC]] = None):
+    def __init__(
+        self,
+        factories: Optional[marshaller_factory_abc.MarshallerFactoryABC] = None,
+        by_type: Optional[Dict[Type, marshaller_abc.MarshallerABC]] = None,
+    ):
         self._factories = sorted(factories or [], reverse=True)
         self._by_type = dict(by_type or {})
 
-    def register_factory(self, marshaller_factory: marshaller_factory_abc.MarshallerFactoryABC):
+    def register_factory(
+        self, marshaller_factory: marshaller_factory_abc.MarshallerFactoryABC
+    ):
         self._factories.append(marshaller_factory)
         self._factories = sorted(self._factories or [], reverse=True)
 
-    def register_marshaller(self, marshaller: marshaller_abc.MarshallerABC, type_: Type = None):
+    def register_marshaller(
+        self, marshaller: marshaller_abc.MarshallerABC, type_: Type = None
+    ):
         type_ = type_ or marshaller.marshalled_type
         self._by_type[type_] = marshaller
 
@@ -33,7 +38,7 @@ class MarshallerContext:
                 if marshaller:
                     break
             if not marshaller:
-                raise MarshallError(f'NoMarshallerForType:{type_}')
+                raise MarshallError(f"NoMarshallerForType:{type_}")
             self._by_type[type_] = marshaller
         return marshaller
 

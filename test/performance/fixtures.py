@@ -4,7 +4,7 @@ from uuid import uuid4
 
 
 def new_id() -> str:
-    """ Required because marshmallow dataclass is difficult to customize """
+    """Required because marshmallow dataclass is difficult to customize"""
     return str(uuid4())
 
 
@@ -24,8 +24,10 @@ class Product:
     tags: List[Tag] = field(default_factory=list)
 
 
-product = Product(title='Widget', weight_in_kg=0.034, number_in_stock=501, active=True, tags=[
-    Tag('Small'),
-    Tag('On Sale'),
-    Tag('Contains Plastic')
-])
+product = Product(
+    title="Widget",
+    weight_in_kg=0.034,
+    number_in_stock=501,
+    active=True,
+    tags=[Tag("Small"), Tag("On Sale"), Tag("Contains Plastic")],
+)

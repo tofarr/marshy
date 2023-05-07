@@ -4,7 +4,7 @@ from typing import TypeVar, Iterable, List, Callable, Iterator
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)
@@ -12,6 +12,7 @@ class IterableMarshaller(MarshallerABC[Iterable[T]]):
     """
     Marshaller for iterable types (lists)
     """
+
     item_marshaller: MarshallerABC[T]
     constructor: Callable[[Iterator[T]], Iterable[T]] = list
 

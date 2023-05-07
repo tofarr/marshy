@@ -26,5 +26,7 @@ jobs:
           python-version: "3.9"
       - name: Install pytest code coverage
         run: python -m pip install --upgrade "pytest-cov~=4.0"
+      - name: Install pytest xdist
+        run: python -m pip install --upgrade "pytest-xdist~=3.2"
       - name: testcoverage
         run: python -m pytest -n auto --cov-report=term-missing --cov=test --cov=marshy --cov=marshy_config_default --cov-fail-under=100

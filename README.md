@@ -278,16 +278,6 @@ run(1000)
 ![status](https://github.com/tofarr/marshy/actions/workflows/quality.yml/badge.svg?branch=main)
 
 The typical process here is:
-* Create a PR with changes. Merge these to main (The `Quality` workflows make sure that styling, linting, and code
-  code coverage standards are met).
+* Create a PR with changes. Merge these to main (The `Quality` workflows make sure that your PR
+  meets the styling, linting, and code coverage standards).
 * New releases created in github are automatically uploaded to pypi
-
-
-You need an account on pypi before this will work:
-
-```
-pip install setuptools wheel
-python setup.py sdist bdist_wheel
-pip install twine
-python -m twine upload dist/*
-```

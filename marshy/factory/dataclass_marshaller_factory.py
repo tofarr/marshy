@@ -67,6 +67,7 @@ def skip(name: str, include: Optional[List[str]], exclude: Optional[List[str]]) 
     return False
 
 
+# pylint: disable=R0913
 def get_attr_configs_for_type(
     type_: Type,
     context: marshaller_context.MarshallerContext,

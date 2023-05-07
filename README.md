@@ -273,7 +273,17 @@ run(1000)
 ```
 
 
-## Building The Project
+## Release Proceedure
+
+![status](https://github.com/tofarr/marshy/actions/workflows/quality.yml/badge.svg?branch=main)
+
+The typical process here is:
+* Create a PR with changes. Merge these to main (The `Quality` workflows make sure that styling, linting, and code
+  code coverage standards are met).
+* ~~Upon merging to main, changes to __version__ are automatically detected used to create a new release~~
+* New releases created in github are automatically uploaded to pypi
+
+
 
 You need an account on pypi before this will work:
 

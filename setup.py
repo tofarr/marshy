@@ -15,7 +15,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/tofarr/marshy",
     packages=setuptools.find_packages(include=["marshy*"]),
-    install_requires=["typing-inspect~=0.7", "black"],
+    install_requires=["typing-inspect~=0.7"],
     extras_require={
         "dev": [
             "black~=23.3",

@@ -1,4 +1,4 @@
-name: Lint
+name: Quality
 
 on: push
 
@@ -28,3 +28,16 @@ jobs:
         run: python -m pip install ".[dev]"
       - name: testcoverage
         run: python -m pytest -n auto --cov-report=term-missing --cov=test --cov=marshy --cov=marshy_config_default --cov-fail-under=100
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Install pylint
+        run: python -m pip install pylint
+      - name: lint
+        run: pylint marshy marshy_config_default

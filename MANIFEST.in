@@ -1,2 +1,3 @@
 recursive-exclude test *
 exclude README.md
+recursive-exclude images

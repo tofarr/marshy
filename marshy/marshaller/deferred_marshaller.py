@@ -5,7 +5,7 @@ from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 from marshy.marshaller_context import MarshallerContext
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)

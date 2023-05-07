@@ -14,11 +14,11 @@ from marshy.marshaller.tuple_marshaller import TupleMarshaller
 @dataclass
 class TupleMarshallerFactory(MarshallerFactoryABC):
     priority: int = 90
-    type_name_attr: str = '__type__'
+    type_name_attr: str = "__type__"
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin is tuple:
             args = typing_inspect.get_args(type_)

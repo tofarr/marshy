@@ -15,15 +15,15 @@ class President:
 
     @property
     def initials(self) -> str:
-        return ''.join(t[0].upper() for t in self.name.split(' '))
+        return "".join(t[0].upper() for t in self.name.split(" "))
 
     @property
     def dob(self) -> Optional[str]:
-        return getattr(self, 'lazy_value', None)
+        return getattr(self, "lazy_value", None)
 
     @dob.setter
     def dob(self, lazy_value: Optional[str]):
-        setattr(self, 'lazy_value', lazy_value)
+        setattr(self, "lazy_value", lazy_value)
 
 
 @dataclass
@@ -32,30 +32,36 @@ class Unannotated:
     This class is lacking an annotation - there is no way to
     automatically figure out a type for the 'typeless' property
     """
+
     @property
     def typeless(self):
-        return getattr(self, '_foo', None)
+        return getattr(self, "_foo", None)
 
     @typeless.setter
     def typeless(self, foo):
-        setattr(self, '_foo', foo)
+        setattr(self, "_foo", foo)
 
 
 class TestMarshallProperties(TestCase):
-
     def test_property_marshalling(self):
-        fdr = President('Franklin Delano Roosevelt')
+        fdr = President("Franklin Delano Roosevelt")
         dumped = dump(fdr)
-        assert dumped == dict(initials='FDR', name='Franklin Delano Roosevelt', dob=None)
+        assert dumped == dict(
+            initials="FDR", name="Franklin Delano Roosevelt", dob=None
+        )
         loaded = load(President, dumped)
         assert loaded == fdr
 
     def test_property_marshalling_with_setter(self):
-        jfk = dict(name='John Fitzgerald Kennedy', dob='May 29, 1917', initials='Ignored when loading')
+        jfk = dict(
+            name="John Fitzgerald Kennedy",
+            dob="May 29, 1917",
+            initials="Ignored when loading",
+        )
         loaded = load(President, jfk)
-        assert loaded == President(name='John Fitzgerald Kennedy')
+        assert loaded == President(name="John Fitzgerald Kennedy")
         dumped = dump(loaded)
-        jfk['initials'] = 'JFK'  # much better!
+        jfk["initials"] = "JFK"  # much better!
         assert dumped == jfk
 
     def test_unannotated_property(self):
@@ -69,24 +75,24 @@ class TestMarshallProperties(TestCase):
             context,
             custom_property_configs=[
                 PropertyConfig(
-                    'typeless',
+                    "typeless",
                     DeferredMarshaller(President, context),
-                    getattr(Unannotated, 'typeless')
+                    getattr(Unannotated, "typeless"),
                 )
-            ]
+            ],
         )
         context.register_marshaller(marshaller)
-        unannotated = dict(typeless=dict(name='John Fitzgerald Kennedy', dob=None))
+        unannotated = dict(typeless=dict(name="John Fitzgerald Kennedy", dob=None))
         loaded = context.load(Unannotated, unannotated)
         dumped = context.dump(loaded)
-        unannotated['typeless']['initials'] = 'JFK'
+        unannotated["typeless"]["initials"] = "JFK"
         assert unannotated == dumped
 
     def test_skip(self):
-        assert skip('a', [], [])
-        assert not skip('a', None, None)
-        assert not skip('a', ['a'], None)
-        assert skip('a', None, ['a'])
-        assert skip('a', [], ['b'])
-        assert not skip('a', ['a'], ['b'])
-        assert skip('a', ['a'], ['a'])
+        assert skip("a", [], [])
+        assert not skip("a", None, None)
+        assert not skip("a", ["a"], None)
+        assert skip("a", None, ["a"])
+        assert skip("a", [], ["b"])
+        assert not skip("a", ["a"], ["b"])
+        assert skip("a", ["a"], ["a"])

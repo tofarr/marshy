@@ -9,7 +9,6 @@ from marshy.marshaller_context import MarshallerContext
 
 
 class TestFactoryOrdering(TestCase):
-
     def test_factory_ordering_ascending(self):
         marshallers = [DummyFactory(i) for i in range(10)]
         sorted_marshallers = list(sorted(marshallers))
@@ -40,17 +39,14 @@ class TestFactoryOrdering(TestCase):
 class DummyFactory(MarshallerFactoryABC):
     priority: int = 0
 
-    def create(self,
-               context: MarshallerContext,
-               type_: Type
-               ) -> Optional[MarshallerABC]:
+    def create(
+        self, context: MarshallerContext, type_: Type
+    ) -> Optional[MarshallerABC]:
         return None
 
 
 class DummyFactory2(MarshallerFactoryABC):
-
-    def create(self,
-               context: MarshallerContext,
-               type_: Type
-               ) -> Optional[MarshallerABC]:
+    def create(
+        self, context: MarshallerContext, type_: Type
+    ) -> Optional[MarshallerABC]:
         return None

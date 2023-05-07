@@ -5,7 +5,6 @@ from marshy import dump, load
 
 
 class TestMarshallUuid(TestCase):
-
     def test_marshall(self):
         for i in range(5):
             uuid = uuid4()

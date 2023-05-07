@@ -1,4 +1,2 @@
-
-
 class MarshallError(Exception):
     pass

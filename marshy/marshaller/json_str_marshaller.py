@@ -3,7 +3,7 @@ from typing import TypeVar
 
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class JsonStrMarshaller(MarshallerABC[T]):

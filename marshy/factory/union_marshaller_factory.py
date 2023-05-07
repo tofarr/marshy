@@ -14,16 +14,19 @@ from marshy.marshaller.union_marshaller import UnionMarshaller
 class UnionMarshallerFactory(MarshallerFactoryABC):
     priority: int = 90
 
-    def create(self,
-               context: marshaller_context.MarshallerContext,
-               type_: Type) -> Optional[marshaller_abc.MarshallerABC]:
+    def create(
+        self, context: marshaller_context.MarshallerContext, type_: Type
+    ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin == Union:
-            marshallers = {name_for_type(t): DeferredMarshaller(t, context) for t in typing_inspect.get_args(type_)}
+            marshallers = {
+                name_for_type(t): DeferredMarshaller(t, context)
+                for t in typing_inspect.get_args(type_)
+            }
             return UnionMarshaller[type_](type_, marshallers)
 
 
 def name_for_type(type_: Type) -> str:
-    if hasattr(type_, '__origin__'):
+    if hasattr(type_, "__origin__"):
         return name_for_type(type_.__origin__)
-    return type_.__name__ if hasattr(type_, '__name__') else str(type_)
+    return type_.__name__ if hasattr(type_, "__name__") else str(type_)

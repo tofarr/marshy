@@ -36,27 +36,26 @@ print(type_with_annotations)
 
 
 class TestFuturesAnnotated(TestCase):
-
     def test_marshall(self):
-        immutable = FuturesAnnotated('Test it!')
+        immutable = FuturesAnnotated("Test it!")
         dumped = dump(immutable)
         loaded = load(FuturesAnnotated, dumped)
         assert loaded == immutable
 
     def test_marshall_non_empty(self):
-        immutable = FuturesAnnotated('Test it!', tags=('foo', 'bar', 'zap'))
+        immutable = FuturesAnnotated("Test it!", tags=("foo", "bar", "zap"))
         dumped = dump(immutable)
         loaded = load(FuturesAnnotated, dumped)
         assert loaded == immutable
 
     def test_marshall_my_tuple(self):
-        my_tuple: MY_TUPLE = (True, Nested('foo'), 3, 'foo')
+        my_tuple: MY_TUPLE = (True, Nested("foo"), 3, "foo")
         dumped = dump(my_tuple, MY_TUPLE)
         loaded = load(MY_TUPLE, dumped)
         assert loaded == my_tuple
 
     def test_marshall_my_tuple_optional(self):
-        my_tuple: MY_TUPLE = (True, None, 3, 'foo')
+        my_tuple: MY_TUPLE = (True, None, 3, "foo")
         dumped = dump(my_tuple, MY_TUPLE)
         loaded = load(MY_TUPLE, dumped)
         assert loaded == my_tuple

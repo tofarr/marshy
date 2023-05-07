@@ -8,6 +8,7 @@ class DatetimeMarshaller(MarshallerABC[ExternalType]):
     """
     Marshaller for datetime instances to iso format
     """
+
     def __init__(self):
         super().__init__(datetime)
 

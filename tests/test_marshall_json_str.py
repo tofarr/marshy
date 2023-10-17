@@ -7,7 +7,6 @@ from marshy.types import ExternalItemType
 
 
 class TestMarshallJsonStr(TestCase):
-
     def test_marshall_external_type(self):
         value = {"foo": [1, True, "bar"]}
         dumped = marshy.dump(value, ExternalType)

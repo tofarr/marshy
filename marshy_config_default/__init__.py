@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from marshy.factory.dataclass_marshaller_factory import DataclassMarshallerFactory
@@ -38,3 +39,4 @@ def configure(context: MarshallerContext):
     context.register_factory(TupleMarshallerFactory())
     context.register_marshaller(JsonStrMarshaller(ExternalType))
     context.register_marshaller(JsonStrMarshaller(ExternalItemType))
+    context.register_marshaller(JsonStrMarshaller(Optional[ExternalItemType]))

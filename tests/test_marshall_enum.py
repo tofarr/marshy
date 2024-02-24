@@ -1,7 +1,7 @@
 from enum import Enum
 from unittest import TestCase
 
-from marshy import dump, load, get_default_context
+from marshy import dump, load, get_default_marshy_context
 from marshy.errors import MarshallError
 from marshy.factory.enum_marshaller_factory import EnumMarshallerFactory
 
@@ -26,7 +26,7 @@ class TestMarshallEnum(TestCase):
     def test_unknown_value_permitted(self):
         # Allow unknown values to be placed in the enum
         marshaller = EnumMarshallerFactory(allow_unknown=True).create(
-            get_default_context(), VehicleTypes
+            get_default_marshy_context(), VehicleTypes
         )
         loaded = marshaller.load("spaceship")
         assert loaded.value == "spaceship"

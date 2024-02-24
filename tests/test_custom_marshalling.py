@@ -1,9 +1,9 @@
-from typing import Optional, List, Iterable, Union, Sized
+from typing import Optional, List, Iterable, Union, Sized, Type
 from unittest import TestCase
 
-from marshy import ExternalType, new_default_context
+from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext
+from marshy.marshy_context import MarshyContext, marshy_context
 
 
 class TestCustomMarshalling(TestCase):
@@ -80,16 +80,15 @@ class Dataset:
 
     # noinspection PyUnusedLocal
     @classmethod
-    def __marshaller_factory__(cls, marshaller_context: MarshallerContext):
+    def __marshaller_factory__(cls, marshaller_context: MarshyContext):
         return DatasetMarshaller()
 
 
-context = new_default_context()
+context = marshy_context()
 
 
 class CoordinateMarshaller(MarshallerABC[Coordinate]):
-    def __init__(self):
-        super().__init__(Coordinate)
+    marshalled_type: Type[Coordinate] = Coordinate
 
     def load(self, item: ExternalType) -> Coordinate:
         """Accept coordinates in the format [x, y]"""
@@ -101,8 +100,7 @@ class CoordinateMarshaller(MarshallerABC[Coordinate]):
 
 
 class DatasetMarshaller(MarshallerABC[Dataset]):
-    def __init__(self):
-        super().__init__(Dataset)
+    marshalled_type: Type[Dataset] = Dataset
 
     def load(self, item: ExternalType) -> Dataset:
         """Accept either a list of coordinates or a dict containing a list of coordinates"""

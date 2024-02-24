@@ -15,6 +15,7 @@ class EnumMarshaller(MarshallerABC[T]):
     Marshaller for enums
     """
 
+    marshalled_type: T
     allow_unknown: bool = False
 
     def load(self, item: Union[str, int, float]) -> T:

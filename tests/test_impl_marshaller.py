@@ -3,8 +3,10 @@ from dataclasses import dataclass
 from typing import List
 from unittest import TestCase
 
-from marshy import dump, load, new_default_context
-from marshy.factory.impl_marshaller_factory import register_impl, get_impls
+from injecty import create_injecty_context
+
+from marshy import marshy_context
+from marshy.factory.impl_marshaller_factory import ImplMarshallerFactory
 
 
 @dataclass
@@ -28,9 +30,10 @@ class Dog(PetAbc):
 
 class TestImplMarshaller(TestCase):
     def test_marshall(self):
-        context = new_default_context()
-        register_impl(PetAbc, Cat, context)
-        register_impl(PetAbc, Dog, context)
+        context = marshy_context()
+        injecty_context = create_injecty_context()
+        injecty_context.register_impls(PetAbc, [Cat, Dog])
+        context.register_factory(ImplMarshallerFactory(injecty_context))
         pet = Cat("Felix")
         dumped = context.dump(pet, PetAbc)
         assert dumped == ["Cat", dict(name="Felix")]
@@ -39,18 +42,14 @@ class TestImplMarshaller(TestCase):
         assert loaded.vocalize() == "Meow!"
 
     def test_marshall_nested(self):
-        register_impl(PetAbc, Cat)
-        register_impl(PetAbc, Dog)
+        context = marshy_context()
+        injecty_context = create_injecty_context()
+        injecty_context.register_impls(PetAbc, [Cat, Dog])
+        context.register_factory(ImplMarshallerFactory(injecty_context))
         pets = [Cat("Felix"), Dog("Rover")]
-        dumped = dump(pets, List[PetAbc])
+        dumped = context.dump(pets, List[PetAbc])
         assert dumped == [["Cat", dict(name="Felix")], ["Dog", dict(name="Rover")]]
-        loaded = load(List[PetAbc], dumped)
+        loaded = context.load(List[PetAbc], dumped)
         assert pets == loaded
         vocalizations = [p.vocalize() for p in loaded]
         assert ["Meow!", "Woof!"] == vocalizations
-
-    def test_get_impls(self):
-        register_impl(PetAbc, Cat)
-        register_impl(PetAbc, Dog)
-        impls = get_impls(PetAbc)
-        self.assertEqual({Cat, Dog}, impls)

@@ -12,7 +12,7 @@ class OptionalMarshaller(MarshallerABC[Optional[T]]):
     """
 
     def __init__(self, marshaller: MarshallerABC[T]):
-        super().__init__(Optional[marshaller.marshalled_type])
+        self.marshalled_type = Optional[marshaller.marshalled_type]
         # noinspection PyDataclass
         self.marshaller = marshaller
 

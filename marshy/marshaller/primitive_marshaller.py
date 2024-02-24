@@ -1,3 +1,5 @@
+from typing import Type
+
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
@@ -12,3 +14,15 @@ class PrimitiveMarshaller(MarshallerABC[ExternalType]):
 
     def dump(self, item: ExternalType) -> ExternalType:
         return item
+
+
+class FloatMarshaller(PrimitiveMarshaller):
+    marshalled_type: Type[float] = float
+
+
+class IntMarshaller(PrimitiveMarshaller):
+    marshalled_type: Type[int] = int
+
+
+class StrMarshaller(PrimitiveMarshaller):
+    marshalled_type: Type[str] = str

@@ -1,3 +1,5 @@
+from types import NoneType
+
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
@@ -12,3 +14,7 @@ class NoOpMarshaller(MarshallerABC[ExternalType]):
 
     def dump(self, item: ExternalType) -> ExternalType:
         return item
+
+
+class NoneMarshaller(NoOpMarshaller):
+    marshalled_type: NoneType = NoneType

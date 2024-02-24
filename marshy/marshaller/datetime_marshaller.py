@@ -1,16 +1,15 @@
 from datetime import datetime
+from typing import Type
 
-from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
 
-class DatetimeMarshaller(MarshallerABC[ExternalType]):
+class DatetimeMarshaller(MarshallerABC[datetime]):
     """
     Marshaller for datetime instances to iso format
     """
 
-    def __init__(self):
-        super().__init__(datetime)
+    marshalled_type: Type[datetime] = datetime
 
     def load(self, item: str) -> datetime:
         loaded = datetime.fromisoformat(item)

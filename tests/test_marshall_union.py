@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List, Union
 from unittest import TestCase
 
-from marshy import dump, load, new_default_context
+from marshy import dump, load, marshy_context
 from marshy.marshaller.union_marshaller import implementation_marshaller
 
 
@@ -44,7 +44,7 @@ class TestMarshallIterable(TestCase):
             has_laser: bool = False
 
         # I expect you to die!
-        context = new_default_context()
+        context = marshy_context()
         context.register_marshaller(
             implementation_marshaller(Base, (VolcanoBase, MoonBase), context)
         )

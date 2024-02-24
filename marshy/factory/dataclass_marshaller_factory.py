@@ -2,14 +2,13 @@ import dataclasses
 import inspect
 from typing import Type, Optional, List, get_type_hints, Tuple
 
-from marshy import marshaller_context
 from marshy.errors import MarshallError
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller import marshaller_abc
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.obj_marshaller import ObjMarshaller, AttrConfig, attr_config
 from marshy.marshaller.property_marshaller import PropertyConfig, PropertyMarshaller
-from marshy.marshaller_context import MarshallerContext
+from marshy.marshy_context import MarshyContext
 from marshy.utils import resolve_forward_refs
 
 
@@ -19,7 +18,7 @@ class DataclassMarshallerFactory(MarshallerFactoryABC):
     exclude_dumped_values: Tuple = tuple()
 
     def create(
-        self, context: marshaller_context.MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[marshaller_abc.MarshallerABC]:
         if not dataclasses.is_dataclass(type_):
             return
@@ -30,7 +29,7 @@ class DataclassMarshallerFactory(MarshallerFactoryABC):
 
 def get_property_configs_for_type(
     type_: Type,
-    context: MarshallerContext,
+    context: MarshyContext,
     include: Optional[List[str]] = None,
     exclude: Optional[List[str]] = None,
     exclude_dumped_values: Tuple = DataclassMarshallerFactory.exclude_dumped_values,
@@ -70,7 +69,7 @@ def skip(name: str, include: Optional[List[str]], exclude: Optional[List[str]]) 
 # pylint: disable=R0913
 def get_attr_configs_for_type(
     type_: Type,
-    context: marshaller_context.MarshallerContext,
+    context: MarshyContext,
     include: Optional[List[str]] = None,
     exclude: Optional[List[str]] = None,
     exclude_dumped_values: Tuple = (None,),
@@ -104,7 +103,7 @@ def get_attr_configs_for_type(
 
 def dataclass_marshaller(
     type_: Type,
-    context: marshaller_context.MarshallerContext,
+    context: MarshyContext,
     custom_attr_configs: Optional[List[AttrConfig]] = None,
     custom_property_configs: Optional[List[PropertyConfig]] = None,
     include: Optional[List[str]] = None,

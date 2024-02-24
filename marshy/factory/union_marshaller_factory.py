@@ -3,7 +3,7 @@ from typing import Type, Optional, Union
 
 import typing_inspect
 
-from marshy import marshaller_context
+from marshy.marshy_context import MarshyContext
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller import marshaller_abc
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
@@ -15,7 +15,7 @@ class UnionMarshallerFactory(MarshallerFactoryABC):
     priority: int = 90
 
     def create(
-        self, context: marshaller_context.MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin == Union:

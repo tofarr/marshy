@@ -3,14 +3,15 @@ from typing import TypeVar
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext
+from marshy.marshy_context import MarshyContext
 
 T = TypeVar("T")
 
 
 @dataclass(frozen=True)
 class DeferredMarshaller(MarshallerABC[T]):
-    marshaller_context: MarshallerContext
+    marshalled_type: T
+    marshaller_context: MarshyContext
 
     def get_marshaller(self) -> MarshallerABC[T]:
         marshaller = self.marshaller_context.get_marshaller(self.marshalled_type)

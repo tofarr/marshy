@@ -1,7 +1,9 @@
 import json
-from typing import TypeVar
+from typing import TypeVar, Type, Optional
 
+from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
+from marshy.types import ExternalItemType
 
 T = TypeVar("T")
 
@@ -19,3 +21,15 @@ class JsonStrMarshaller(MarshallerABC[T]):
     def dump(self, item: T) -> str:
         dumped = json.dumps(item)
         return dumped
+
+
+class ExternalTypeMarshaller(JsonStrMarshaller):
+    marshalled_type: Type[ExternalType] = ExternalType
+
+
+class ExternalItemTypeMarshaller(JsonStrMarshaller):
+    marshalled_type: Type[ExternalItemType] = ExternalItemType
+
+
+class OptionalExternalItemTypeMarshaller(JsonStrMarshaller):
+    marshalled_type: Type[Optional[ExternalItemType]] = Optional[ExternalItemType]

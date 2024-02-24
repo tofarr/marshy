@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Type
 
-from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
 

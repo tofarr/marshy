@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Type, Optional, Set
+from typing import Type, Optional
 
 from injecty import get_default_injecty_context, InjectyContext
 

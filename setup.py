@@ -12,7 +12,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/tofarr/marshy",
     packages=setuptools.find_packages(include=["marshy*"]),
-    install_requires=["typing-inspect~=0.7"],
+    install_requires=["typing-inspect~=0.7", "injecty~=0.0"],
     python_requires=">=3.7",
     extras_require={
         "dev": [

@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext, marshy_context
+from marshy.marshy_context import MarshyContext, marshy_context
 
 
 class TestCustomMarshalling(TestCase):
@@ -80,7 +80,7 @@ class Dataset:
 
     # noinspection PyUnusedLocal
     @classmethod
-    def __marshaller_factory__(cls, marshaller_context: MarshallerContext):
+    def __marshaller_factory__(cls, marshaller_context: MarshyContext):
         return DatasetMarshaller()
 
 

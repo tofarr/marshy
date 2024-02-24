@@ -3,7 +3,7 @@ from typing import Type, Optional, Set
 
 from injecty import get_default_injecty_context, InjectyContext
 
-from marshy import marshaller_context
+from marshy.marshy_context import MarshyContext
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.factory.union_marshaller_factory import name_for_type
 from marshy.marshaller import marshaller_abc
@@ -19,7 +19,7 @@ class ImplMarshallerFactory(MarshallerFactoryABC):
     priority: int = 110
 
     def create(
-        self, context: marshaller_context.MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[marshaller_abc.MarshallerABC]:
         # noinspection PyTypeChecker
         impls = self.injecty_context.get_impls(base=type_, permit_no_impl=True)

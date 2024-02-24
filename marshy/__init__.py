@@ -1,15 +1,14 @@
-from typing import Type, Any, Optional, ForwardRef, TypeVar
+from typing import Type, Any, Optional, TypeVar
 
-from marshy.marshaller_context import marshy_context
+from marshy.marshy_context import marshy_context, MarshyContext
 from marshy.types import ExternalType
 
 _default_context = None
 T = TypeVar("T")
-CONFIG_MODULE_PREFIX = "marshy_config_"
 
 
 # pylint: disable=W0603
-def get_default_marshy_context() -> ForwardRef("marshy.marshaller_context.MarshallerContext"):
+def get_default_marshy_context() -> MarshyContext:
     global _default_context
     if not _default_context:
         _default_context = marshy_context()

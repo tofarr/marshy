@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext, marshy_context
+from marshy.marshy_context import MarshyContext, marshy_context
 
 
 class TestFactoryOrdering(TestCase):
@@ -39,13 +39,13 @@ class DummyFactory(MarshallerFactoryABC):
     priority: int = 0
 
     def create(
-        self, context: MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[MarshallerABC]:
         return None
 
 
 class DummyFactory2(MarshallerFactoryABC):
     def create(
-        self, context: MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[MarshallerABC]:
         return None

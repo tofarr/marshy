@@ -4,7 +4,7 @@ from typing import TypeVar, Optional, Dict, Type, List, Iterable
 from marshy import ExternalType
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext
+from marshy.marshy_context import MarshyContext
 
 T = TypeVar("T")
 
@@ -41,7 +41,7 @@ def resolve_type(type_: Type) -> Type:
 
 
 def implementation_marshaller(
-    base_type: Type, impls: Iterable[Type], marshaller_context: MarshallerContext
+    base_type: Type, impls: Iterable[Type], marshaller_context: MarshyContext
 ):
     return UnionMarshaller(
         base_type,

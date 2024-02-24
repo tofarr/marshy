@@ -3,12 +3,11 @@ from typing import Type, Optional
 
 import typing_inspect
 
-from marshy import marshaller_context
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller import marshaller_abc
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.iterable_marshaller import IterableMarshaller
-
+from marshy.marshy_context import MarshyContext
 
 @dataclass
 class ListMarshallerFactory(MarshallerFactoryABC):
@@ -16,7 +15,7 @@ class ListMarshallerFactory(MarshallerFactoryABC):
     type_name_attr: str = "__type__"
 
     def create(
-        self, context: marshaller_context.MarshallerContext, type_: Type
+        self, context: MarshyContext, type_: Type
     ) -> Optional[marshaller_abc.MarshallerABC]:
         origin = typing_inspect.get_origin(type_)
         if origin in (list, set, frozenset):

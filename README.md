@@ -71,7 +71,7 @@ Internally, API defines 3 core concepts:
   a `create` method used to create marshallers for types, and has
   a priority which controls the order in which they are run. 
   (higher first)
-* A [MarshallerContext](marshy/marshaller_context.py): coordinates
+* A [MarshallerContext](marshy/marshy_context.py): coordinates
   the activities of Marshallers and Factories
 
 ## Creating a Custom Marshaller Context

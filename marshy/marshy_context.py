@@ -52,6 +52,8 @@ def marshy_context(injecty_context: Optional[InjectyContext] = None):
     if injecty_context is None:
         injecty_context = get_default_injecty_context()
     return MarshyContext(
-        marshallers_by_type={m.marshalled_type: m for m in injecty_context.get_instances(MarshallerABC)},
-        factories=injecty_context.get_instances(MarshallerFactoryABC)
+        marshallers_by_type={
+            m.marshalled_type: m for m in injecty_context.get_instances(MarshallerABC)
+        },
+        factories=injecty_context.get_instances(MarshallerFactoryABC),
     )

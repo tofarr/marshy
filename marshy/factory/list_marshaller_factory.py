@@ -9,6 +9,7 @@ from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.iterable_marshaller import IterableMarshaller
 from marshy.marshy_context import MarshyContext
 
+
 @dataclass
 class ListMarshallerFactory(MarshallerFactoryABC):
     priority: int = 100

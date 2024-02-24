@@ -12,6 +12,7 @@ class IterableMarshaller(MarshallerABC[Iterable[T]]):
     """
     Marshaller for iterable types (lists)
     """
+
     marshalled_type: T
     item_marshaller: MarshallerABC[T]
     constructor: Callable[[Iterator[T]], Iterable[T]] = list

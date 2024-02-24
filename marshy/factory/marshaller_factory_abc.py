@@ -11,9 +11,7 @@ class MarshallerFactoryABC(ABC):
     priority: int = 0
 
     @abstractmethod
-    def create(
-        self, context: _MarshyContext, type_: Type
-    ) -> Optional[_MarshallerABC]:
+    def create(self, context: _MarshyContext, type_: Type) -> Optional[_MarshallerABC]:
         """
         Create a new marshaller instance if possible - if not return None
         """

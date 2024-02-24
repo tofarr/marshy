@@ -7,7 +7,11 @@ from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller
 from marshy.marshaller.bool_marshaller import BoolMarshaller
 from marshy.marshaller.obj_marshaller import ObjMarshaller, attr_config
 from marshy.marshaller.optional_marshaller import OptionalMarshaller
-from marshy.marshaller.primitive_marshaller import StrMarshaller, IntMarshaller, FloatMarshaller
+from marshy.marshaller.primitive_marshaller import (
+    StrMarshaller,
+    IntMarshaller,
+    FloatMarshaller,
+)
 
 # This is a little bit strange, but for these forward references we have to include the full name or there will be no
 # way to resolve it later

@@ -14,14 +14,18 @@ class UnionMarshaller(MarshallerABC[T]):
     """
     Marshaller for polymorphic types
     """
+
     marshalled_type: T
     marshallers_by_name: Dict[str, MarshallerABC[T]]
     names_by_type: Dict[Type, str] = field(default_factory=dict)
 
     def __post_init__(self):
-        self.names_by_type.update({
-            resolve_type(m.marshalled_type): n for n, m in self.marshallers_by_name.items()
-        })
+        self.names_by_type.update(
+            {
+                resolve_type(m.marshalled_type): n
+                for n, m in self.marshallers_by_name.items()
+            }
+        )
 
     def load(self, item: List[ExternalType]) -> T:
         type_name = item[0]

@@ -9,6 +9,7 @@ class DatetimeMarshaller(MarshallerABC[datetime]):
     """
     Marshaller for datetime instances to iso format
     """
+
     marshalled_type: Type[datetime] = datetime
 
     def load(self, item: str) -> datetime:

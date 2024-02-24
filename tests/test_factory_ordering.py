@@ -38,14 +38,10 @@ class TestFactoryOrdering(TestCase):
 class DummyFactory(MarshallerFactoryABC):
     priority: int = 0
 
-    def create(
-        self, context: MarshyContext, type_: Type
-    ) -> Optional[MarshallerABC]:
+    def create(self, context: MarshyContext, type_: Type) -> Optional[MarshallerABC]:
         return None
 
 
 class DummyFactory2(MarshallerFactoryABC):
-    def create(
-        self, context: MarshyContext, type_: Type
-    ) -> Optional[MarshallerABC]:
+    def create(self, context: MarshyContext, type_: Type) -> Optional[MarshallerABC]:
         return None

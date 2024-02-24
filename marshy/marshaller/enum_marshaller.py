@@ -14,6 +14,7 @@ class EnumMarshaller(MarshallerABC[T]):
     """
     Marshaller for enums
     """
+
     marshalled_type: T
     allow_unknown: bool = False
 

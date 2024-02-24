@@ -12,6 +12,7 @@ class TupleMarshaller(MarshallerABC[Iterable[T]]):
     """
     Marshaller for iterable types (lists)
     """
+
     marshalled_type: Type
     item_marshallers: Tuple[MarshallerABC[T], ...]
 

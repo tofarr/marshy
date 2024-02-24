@@ -27,7 +27,7 @@ class PropertyMarshaller(MarshallerABC[T]):
     def __init__(
         self, marshaller: MarshallerABC[T], property_configs: Tuple[PropertyConfig]
     ):
-        super().__init__(marshaller.marshalled_type)
+        self.marshalled_type = marshaller.marshalled_type
         self.marshaller = marshaller
         self.property_configs = property_configs
 

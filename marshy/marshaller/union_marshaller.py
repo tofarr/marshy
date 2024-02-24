@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 from typing import TypeVar, Optional, Dict, Type, List, Iterable
 
 from marshy import ExternalType
@@ -8,20 +9,19 @@ from marshy.marshaller_context import MarshallerContext
 T = TypeVar("T")
 
 
+@dataclass(frozen=True)
 class UnionMarshaller(MarshallerABC[T]):
     """
     Marshaller for polymorphic types
     """
+    marshalled_type: T
+    marshallers_by_name: Dict[str, MarshallerABC[T]]
+    names_by_type: Dict[Type, str] = field(default_factory=dict)
 
-    # noinspection PyDataclass
-    def __init__(
-        self, marshalled_type: T, marshallers_by_name: Dict[str, MarshallerABC[T]]
-    ):
-        super().__init__(marshalled_type)
-        self.marshallers_by_name = marshallers_by_name
-        self.names_by_type = {
-            resolve_type(m.marshalled_type): n for n, m in marshallers_by_name.items()
-        }
+    def __post_init__(self):
+        self.names_by_type.update({
+            resolve_type(m.marshalled_type): n for n, m in self.marshallers_by_name.items()
+        })
 
     def load(self, item: List[ExternalType]) -> T:
         type_name = item[0]

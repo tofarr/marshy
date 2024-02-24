@@ -10,6 +10,7 @@ T = TypeVar("T")
 
 @dataclass(frozen=True)
 class DeferredMarshaller(MarshallerABC[T]):
+    marshalled_type: T
     marshaller_context: MarshallerContext
 
     def get_marshaller(self) -> MarshallerABC[T]:

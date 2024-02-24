@@ -8,15 +8,7 @@ _MarshallerABC = "marshy.marshaller_abc.MarshallerABC"
 
 @total_ordering
 class MarshallerFactoryABC(ABC):
-    @property
-    def priority(self) -> int:
-        return 0
-
-    def __ne__(self, other):
-        return self.priority != getattr(other, "priority", None)
-
-    def __lt__(self, other):
-        return self.priority < getattr(other, "priority", None)
+    priority: int = 0
 
     @abstractmethod
     def create(
@@ -25,3 +17,9 @@ class MarshallerFactoryABC(ABC):
         """
         Create a new marshaller instance if possible - if not return None
         """
+
+    def __ne__(self, other):
+        return self.priority != getattr(other, "priority", None)
+
+    def __lt__(self, other):
+        return self.priority < getattr(other, "priority", None)

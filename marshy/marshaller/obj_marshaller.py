@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Tuple, Optional
+from typing import TypeVar, Tuple, Optional, Type
 
 from marshy.marshaller.marshaller_abc import MarshallerABC
 from marshy.types import ExternalType
@@ -35,6 +35,7 @@ def attr_config(
 
 @dataclass(frozen=True)
 class ObjMarshaller(MarshallerABC[T]):
+    marshalled_type: Type[T]
     attr_configs: Tuple
 
     def load(self, item: ExternalType) -> T:

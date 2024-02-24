@@ -7,7 +7,6 @@ from marshy.types import ExternalType
 T = TypeVar("T")
 
 
-@dataclass(frozen=True)
 class MarshallerABC(ABC, Generic[T]):
     marshalled_type: Type[T]
 

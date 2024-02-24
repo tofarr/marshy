@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 from unittest import TestCase
 
-from marshy import load, dump, get_default_context, new_default_context
+from marshy import load, dump, get_default_marshy_context, marshy_context
 from marshy.errors import MarshallError
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller, skip
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
@@ -66,10 +66,10 @@ class TestMarshallProperties(TestCase):
 
     def test_unannotated_property(self):
         with self.assertRaises(MarshallError):
-            get_default_context().get_marshaller(Unannotated)
+            get_default_marshy_context().get_marshaller(Unannotated)
 
     def test_unannotated_custom_property(self):
-        context = new_default_context()
+        context = marshy_context()
         marshaller = dataclass_marshaller(
             Unannotated,
             context,

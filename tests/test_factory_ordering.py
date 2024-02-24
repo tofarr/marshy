@@ -2,24 +2,23 @@ from dataclasses import dataclass
 from typing import Optional, Type
 from unittest import TestCase
 
-from marshy import get_default_context
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshaller_context import MarshallerContext
+from marshy.marshaller_context import MarshallerContext, marshy_context
 
 
 class TestFactoryOrdering(TestCase):
     def test_factory_ordering_ascending(self):
-        marshallers = [DummyFactory(i) for i in range(10)]
-        sorted_marshallers = list(sorted(marshallers))
-        assert sorted_marshallers == marshallers
+        factories = [DummyFactory(i) for i in range(10)]
+        sorted_factories = list(sorted(factories))
+        assert sorted_factories == factories
 
     def test_factory_ordering_descending(self):
-        marshallers = [DummyFactory(i) for i in range(10)]
-        sorted_marshallers = list(sorted(marshallers, reverse=True))
-        marshallers.reverse()
-        assert sorted_marshallers == marshallers
-        assert marshallers[0].create(get_default_context(), str) is None
+        factories = [DummyFactory(i) for i in range(10)]
+        sorted_factories = list(sorted(factories, reverse=True))
+        factories.reverse()
+        assert sorted_factories == factories
+        assert factories[0].create(marshy_context(), str) is None
 
     def test_factory_compare(self):
         a = DummyFactory(1)

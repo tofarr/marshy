@@ -1,10 +1,11 @@
+from typing import Type
+
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
 
 
 class BoolMarshaller(MarshallerABC[ExternalType]):
-    def __init__(self):
-        super().__init__(bool)
+    marshalled_type: Type[bool] = bool
 
     def load(self, item: ExternalType) -> bool:
         if isinstance(item, str):

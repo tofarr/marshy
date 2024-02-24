@@ -2,16 +2,12 @@ from dataclasses import dataclass
 from typing import Dict, Any, Optional, List
 from unittest import TestCase
 
-from marshy import dump, load, new_default_context
+from marshy import dump, load, marshy_context
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller
-from marshy.marshaller import (
-    int_marshaller,
-    str_marshaller,
-    float_marshaller,
-    bool_marshaller,
-)
+from marshy.marshaller.bool_marshaller import BoolMarshaller
 from marshy.marshaller.obj_marshaller import ObjMarshaller, attr_config
 from marshy.marshaller.optional_marshaller import OptionalMarshaller
+from marshy.marshaller.primitive_marshaller import StrMarshaller, IntMarshaller, FloatMarshaller
 
 # This is a little bit strange, but for these forward references we have to include the full name or there will be no
 # way to resolve it later
@@ -48,12 +44,12 @@ class TestMarshallObj(TestCase):
         marshaller = ObjMarshaller(
             dict,
             (
-                attr_config(int_marshaller, "i"),
-                attr_config(str_marshaller, "s"),
-                attr_config(float_marshaller, "f"),
-                attr_config(bool_marshaller, "b"),
+                attr_config(IntMarshaller(), "i"),
+                attr_config(StrMarshaller(), "s"),
+                attr_config(FloatMarshaller(), "f"),
+                attr_config(BoolMarshaller(), "b"),
                 attr_config(
-                    OptionalMarshaller(int_marshaller),
+                    OptionalMarshaller(IntMarshaller()),
                     "n",
                     exclude_dumped_values=(None,),
                 ),
@@ -70,11 +66,11 @@ class TestMarshallObj(TestCase):
         marshaller = ObjMarshaller(
             dict,
             (
-                attr_config(int_marshaller, "i"),
-                attr_config(str_marshaller, "s"),
-                attr_config(float_marshaller, "f"),
-                attr_config(bool_marshaller, "b"),
-                attr_config(OptionalMarshaller(int_marshaller), "n"),
+                attr_config(IntMarshaller(), "i"),
+                attr_config(StrMarshaller(), "s"),
+                attr_config(FloatMarshaller(), "f"),
+                attr_config(BoolMarshaller(), "b"),
+                attr_config(OptionalMarshaller(IntMarshaller()), "n"),
             ),
         )
         value: Dict[str, Any] = dict(i=10, s="foo", f=12.2, b=True, n=None)
@@ -119,12 +115,12 @@ class TestMarshallObj(TestCase):
         """
         Test Marshaller which capitalizes the attribute name for ID
         """
-        context = new_default_context()
+        context = marshy_context()
         context.register_marshaller(
             dataclass_marshaller(
                 Customer,
                 context,
-                custom_attr_configs=[attr_config(str_marshaller, "id", "ID")],
+                custom_attr_configs=[attr_config(StrMarshaller(), "id", "ID")],
                 exclude=["id"],
             )
         )

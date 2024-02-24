@@ -45,7 +45,11 @@ Custom properties are also serialized by default. (If they
 have a setter, it is used when loading):
 
 ```
-@dataclass
+import marshy
+from functools import reduce
+import dataclasses
+
+@dataclasses.dataclass
 class Factorial:
   value: int
   
@@ -54,9 +58,9 @@ class Factorial:
     return reduce(lambda a, b: a*b, range(1, self.value+1))
     
 factorial = Factorial(4)
-dumped = dump(factorial)
+dumped = marshy.dump(factorial)
 # dumped == dict(value=4, factorial=24)
-loaded = load(Factorial, dumped)
+loaded = marshy.load(Factorial, dumped)
 # loaded == factorial
 ```
 
@@ -71,7 +75,7 @@ Internally, API defines 3 core concepts:
   a `create` method used to create marshallers for types, and has
   a priority which controls the order in which they are run. 
   (higher first)
-* A [MarshallerContext](marshy/marshy_context.py): coordinates
+* A [MarshyContext](marshy/marshy_context.py): coordinates
   the activities of Marshallers and Factories
 
 ## Creating a Custom Marshaller Context
@@ -82,19 +86,15 @@ contexts and store references to them. The default works well
 otherwise:
 
 ```
-# Dump a Doohickey using the default context (Same as marshy.dump...)
-from marshy import get_default_context
-dumped = get_default_context().dump(Doohickey('Thingy'))
-
-# Create a new blank marshaller context - this will fail
+# Create a new blank marshy context - this will fail
 # because there are no preset types or factories.
-from marshy.marshaller_context import MarshallerContext
-my_marshaller_context = MarshallerContext()
+from marshy.marshy_context import MarshyContext
+my_marshaller_context = MarshyContext()
 dumped = my_marshaller_context.dump(Doohickey('Thingy'))
 
 # Create a new marshaller context which copies the default rules.
-from marshy.default_context import new_default_context
-my_default_context = new_default_context()
+from marshy.marshy_context import marshy_context
+my_default_context = marshy_context()
 dumped = my_default_context.dump(Doohickey('Thingy'))
 ```
 
@@ -108,9 +108,7 @@ from marshy.types import ExternalType
 
 
 class MyDoohickeyMarshaller(MarshallerABC[Doohickey]):
-
-    def __init__(self):
-        super().__init__(Doohickey)
+    marshalled_type = Doohickey
 
     def load(self, item: ExternalType) -> Doohickey:
         return Doohickey(item[0], item[1], item[2])
@@ -148,11 +146,15 @@ object rather than a single type - In this case you need a factory,
 Taking the doohickey example:
 
 ```
-from marshy import dump, get_default_context
-from marshy.marshaller import str_marshaller, bool_marshaller
-from marshy.marshaller.obj_marshaller import ObjMarshaller
-attr_marshallers = dict(title=str_marshaller, tags=bool_marshaller)
-get_default_context().register_marshaller(ObjMarshaller(Doohickey, attr_marshallers, False))
+from marshy import dump, get_default_marshy_context
+from marshy.marshaller.bool_marshaller import BoolMarshaller
+from marshy.marshaller.primitive_marshaller import StrMarshaller
+from marshy.marshaller.obj_marshaller import attr_config, ObjMarshaller
+attr_marshallers = [
+    attr_config(StrMarshaller(), "title"),
+    attr_config(BoolMarshaller(), "tags"),
+]
+get_default_marshy_context().register_marshaller(ObjMarshaller(Doohickey, attr_marshallers))
 dumped = dump(Doohickey('Thingy'))
 # dumped == dict(title='Thingy', tags=False)
 ```
@@ -177,10 +179,8 @@ class Point:
     def __marshaller_factory__(cls, marshaller_context):
        return PointMarshaller()
        
-class PointMarshaller(MarshallerABC):
-
-    def __init__(self):
-        super().__init__(Point)
+class PointMarshaller(MarshallerABC[Point]):
+    marshalled_type = Point
 
     def load(self, item):
         return Point(item[0], item[1])
@@ -206,14 +206,14 @@ implement a custom Factory to deal with it!)
 
 ## Customizing the default context
 
-The project uses the namespace convention `marshy_config_` to identity configuration packages.
-(https://packaging.python.org/guides/creating-and-discovering-plugins/). Configuration packages should have an integer
-priority attribute, and a  `def configure(context: MarshallerContext)` function. e.g.:
-[default_config](marshy_config_default/__init__.py)
+We use [Injecty](https://github.com/tofarr/injecty) to manage dependency injection. Since any top level module
+injecty_config_* is automatically loaded, our [injecty_config_marshy.py](injecty_config_marshy.py) defines our
+default Marshaller / Factory implementations.
 
 ## Adding Polymorphic Implementations
 
-Taking the following polymorphic classes where `Pet` has implementations `Cat` and `Dog`:
+We also use injecty to find polymorphic implementations of types to marshall / unmarshall. 
+Taking the following classes where `Pet` has implementations `Cat` and `Dog`:
 
 ```
 from abc import ABC, abstractmethod
@@ -244,15 +244,14 @@ In order to deserialize a Pet, marshy needs to be informed tha the implementatio
 in the configuration:
 
 ```
-from marshy import load
-from marshy.factory.impl_marshaller_factory import register_impl
-register_impl(PetAbc, Cat)
-register_impl(PetAbc, Dog)
+from injecty import get_default_injecty_context
+import marshy
+get_default_injecty_context().register_impls(PetAbc, [Cat, Dog])
 pet = ['Cat', dict(name='Felix')]
-loaded = load(PetAbc, pet)
+loaded = marshy.load(PetAbc, pet)
 ```
 
-[Tests for this are here] (test/test_impl_marshaller.py)
+[Tests for this are here](test/test_impl_marshaller.py)
 
 ## Performance Tests
 

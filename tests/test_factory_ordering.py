@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshy_context import MarshyContext, marshy_context
+from marshy.marshy_context import create_marshy_context, MarshyContext
 
 
 class TestFactoryOrdering(TestCase):
@@ -18,7 +18,7 @@ class TestFactoryOrdering(TestCase):
         sorted_factories = list(sorted(factories, reverse=True))
         factories.reverse()
         assert sorted_factories == factories
-        assert factories[0].create(marshy_context(), str) is None
+        assert factories[0].create(create_marshy_context(), str) is None
 
     def test_factory_compare(self):
         a = DummyFactory(1)

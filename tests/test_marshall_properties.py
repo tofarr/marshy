@@ -2,11 +2,13 @@ from dataclasses import dataclass
 from typing import Optional
 from unittest import TestCase
 
-from marshy import load, dump, get_default_marshy_context, marshy_context
+from marshy import load, dump, get_default_marshy_context
+
 from marshy.errors import MarshallError
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller, skip
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
 from marshy.marshaller.property_marshaller import PropertyConfig
+from marshy.marshy_context import create_marshy_context
 
 
 @dataclass
@@ -69,7 +71,7 @@ class TestMarshallProperties(TestCase):
             get_default_marshy_context().get_marshaller(Unannotated)
 
     def test_unannotated_custom_property(self):
-        context = marshy_context()
+        context = create_marshy_context()
         marshaller = dataclass_marshaller(
             Unannotated,
             context,
@@ -83,7 +85,9 @@ class TestMarshallProperties(TestCase):
         )
         context.register_marshaller(marshaller)
         unannotated = dict(typeless=dict(name="John Fitzgerald Kennedy", dob=None))
+        # noinspection PyTestUnpassedFixture
         loaded = context.load(Unannotated, unannotated)
+        # noinspection PyTestUnpassedFixture
         dumped = context.dump(loaded)
         unannotated["typeless"]["initials"] = "JFK"
         assert unannotated == dumped

@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
-from marshy.marshy_context import MarshyContext, marshy_context
+from marshy.marshy_context import create_marshy_context, MarshyContext
 
 
 class TestCustomMarshalling(TestCase):
@@ -84,7 +84,7 @@ class Dataset:
         return DatasetMarshaller()
 
 
-context = marshy_context()
+context = create_marshy_context()
 
 
 class CoordinateMarshaller(MarshallerABC[Coordinate]):

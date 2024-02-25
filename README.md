@@ -93,8 +93,8 @@ my_marshaller_context = MarshyContext()
 dumped = my_marshaller_context.dump(Doohickey('Thingy'))
 
 # Create a new marshaller context which copies the default rules.
-from marshy.marshy_context import marshy_context
-my_default_context = marshy_context()
+from marshy.marshy_context import create_marshy_context
+my_default_context = create_marshy_context()
 dumped = my_default_context.dump(Doohickey('Thingy'))
 ```
 
@@ -198,7 +198,7 @@ Due to the fact that types in the object graph can self reference,
 we defer resolution of most marshaller until as late as possible.
 [DeferredMarshaller](marshy/marshaller/deferred_marshaller.py) 
 is responsible for this, and means types can 
-[self reference](test/test_marshall_deferred.py). 
+[self reference](tests/test_marshall_deferred.py). 
 
 Circular references within objects will still cause an error.
 (Unless you decide on an error handling protocol for this an 
@@ -251,7 +251,7 @@ pet = ['Cat', dict(name='Felix')]
 loaded = marshy.load(PetAbc, pet)
 ```
 
-[Tests for this are here](test/test_impl_marshaller.py)
+[Tests for this are here](tests/test_impl_marshaller.py)
 
 ## Performance Tests
 
@@ -279,4 +279,4 @@ run(1000)
 The typical process here is:
 * Create a PR with changes. Merge these to main (The `Quality` workflows make sure that your PR
   meets the styling, linting, and code coverage standards).
-* New releases created in github are automatically uploaded to pypi
+* New releases created in gitHub are automatically uploaded to pypi

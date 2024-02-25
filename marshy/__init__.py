@@ -1,17 +1,16 @@
-from typing import Type, Any, Optional, TypeVar
+from typing import Type, Any, Optional
 
-from marshy.marshy_context import marshy_context, MarshyContext
+from marshy.marshy_context import create_marshy_context, MarshyContext, T
 from marshy.types import ExternalType
 
 _default_context = None
-T = TypeVar("T")
 
 
 # pylint: disable=W0603
 def get_default_marshy_context() -> MarshyContext:
     global _default_context
     if not _default_context:
-        _default_context = marshy_context()
+        _default_context = create_marshy_context()
     return _default_context
 
 

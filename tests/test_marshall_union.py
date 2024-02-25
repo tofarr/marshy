@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import List, Union
 from unittest import TestCase
 
-from marshy import dump, load, marshy_context
+from marshy import dump, load
+from marshy.marshy_context import create_marshy_context
 from marshy.marshaller.union_marshaller import implementation_marshaller
 
 
@@ -44,18 +45,22 @@ class TestMarshallIterable(TestCase):
             has_laser: bool = False
 
         # I expect you to die!
-        context = marshy_context()
+        context = create_marshy_context()
         context.register_marshaller(
             implementation_marshaller(Base, (VolcanoBase, MoonBase), context)
         )
         moon_base = MoonBase(has_laser=True)
+        # noinspection PyTestUnpassedFixture
         dumped = context.dump(moon_base, Base)
         assert dumped == ["MoonBase", dict(has_laser=True)]
+        # noinspection PyTestUnpassedFixture
         loaded = context.load(Base, dumped)
         assert loaded == MoonBase(has_laser=True)
 
         volcano_base = VolcanoBase(magma_temperature=2100.0)
+        # noinspection PyTestUnpassedFixture
         dumped = context.dump(volcano_base, Base)
         assert dumped == ["VolcanoBase", dict(magma_temperature=2100.0)]
+        # noinspection PyTestUnpassedFixture
         loaded = context.load(Base, dumped)
         assert volcano_base == loaded

@@ -25,7 +25,7 @@ class PropertyMarshaller(MarshallerABC[T]):
 
     # noinspection PyDataclass
     def __init__(
-        self, marshaller: MarshallerABC[T], property_configs: Tuple[PropertyConfig]
+        self, marshaller: MarshallerABC[T], property_configs: Tuple[PropertyConfig, ...]
     ):
         self.marshalled_type = marshaller.marshalled_type
         self.marshaller = marshaller

@@ -30,10 +30,9 @@ class Dog(PetAbc):
 
 class TestImplMarshaller(TestCase):
     def test_marshall(self):
-        context = create_marshy_context()
         injecty_context = create_injecty_context()
         injecty_context.register_impls(PetAbc, [Cat, Dog])
-        context.register_factory(ImplMarshallerFactory(injecty_context))
+        context = create_marshy_context(injecty_context=injecty_context)
         pet = Cat("Felix")
         dumped = context.dump(pet, PetAbc)
         assert dumped == ["Cat", dict(name="Felix")]
@@ -42,10 +41,9 @@ class TestImplMarshaller(TestCase):
         assert loaded.vocalize() == "Meow!"
 
     def test_marshall_nested(self):
-        context = create_marshy_context()
         injecty_context = create_injecty_context()
         injecty_context.register_impls(PetAbc, [Cat, Dog])
-        context.register_factory(ImplMarshallerFactory(injecty_context))
+        context = create_marshy_context(injecty_context=injecty_context)
         pets = [Cat("Felix"), Dog("Rover")]
         dumped = context.dump(pets, List[PetAbc])
         assert dumped == [["Cat", dict(name="Felix")], ["Dog", dict(name="Rover")]]

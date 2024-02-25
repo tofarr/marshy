@@ -16,6 +16,7 @@ T = TypeVar("T")
 class MarshyContext:
     marshallers_by_type: Dict[Type, MarshallerABC] = field(default_factory=dict)
     factories: List[MarshallerFactoryABC] = field(default_factory=list)
+    injecty_context: Optional[InjectyContext] = field(default_factory=get_default_injecty_context)
 
     def load(self, type_: Type[T], to_load: ExternalType) -> T:
         marshaller = self.get_marshaller(type_)
@@ -58,4 +59,5 @@ def create_marshy_context(injecty_context: Optional[InjectyContext] = None):
             m.marshalled_type: m for m in injecty_context.get_instances(MarshallerABC)
         },
         factories=injecty_context.get_instances(MarshallerFactoryABC),
+        injecty_context=injecty_context,
     )

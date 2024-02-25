@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar
+from typing import TypeVar, Type
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
@@ -10,7 +10,7 @@ T = TypeVar("T")
 
 @dataclass(frozen=True)
 class DeferredMarshaller(MarshallerABC[T]):
-    marshalled_type: T
+    marshalled_type: Type[T]
     marshaller_context: MarshyContext
 
     def get_marshaller(self) -> MarshallerABC[T]:

@@ -5,8 +5,8 @@ from unittest import TestCase
 
 from injecty import create_injecty_context
 
-from marshy import marshy_context
 from marshy.factory.impl_marshaller_factory import ImplMarshallerFactory
+from marshy.marshy_context import create_marshy_context
 
 
 @dataclass
@@ -30,7 +30,7 @@ class Dog(PetAbc):
 
 class TestImplMarshaller(TestCase):
     def test_marshall(self):
-        context = marshy_context()
+        context = create_marshy_context()
         injecty_context = create_injecty_context()
         injecty_context.register_impls(PetAbc, [Cat, Dog])
         context.register_factory(ImplMarshallerFactory(injecty_context))
@@ -42,7 +42,7 @@ class TestImplMarshaller(TestCase):
         assert loaded.vocalize() == "Meow!"
 
     def test_marshall_nested(self):
-        context = marshy_context()
+        context = create_marshy_context()
         injecty_context = create_injecty_context()
         injecty_context.register_impls(PetAbc, [Cat, Dog])
         context.register_factory(ImplMarshallerFactory(injecty_context))

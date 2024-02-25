@@ -13,7 +13,7 @@ class MarshallerFactoryABC(ABC):
     @abstractmethod
     def create(self, context: _MarshyContext, type_: Type) -> Optional[_MarshallerABC]:
         """
-        Create a new marshaller instance if possible - if not return None
+        Create a new marshaller instance if possible, otherwise return None
         """
 
     def __ne__(self, other):

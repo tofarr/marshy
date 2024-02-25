@@ -75,7 +75,7 @@ def get_attr_configs_for_type(
     exclude_dumped_values: Tuple = (None,),
 ):
     # noinspection PyDataclass
-    fields: List[dataclasses.Field] = dataclasses.fields(type_)
+    fields: Tuple[dataclasses.Field, ...] = dataclasses.fields(type_)
     try:
         types = get_type_hints(type_, globalns=None, localns=None)
         attr_configs = [

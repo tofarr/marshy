@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, Optional, List
 from unittest import TestCase
 
-from marshy import dump, load, marshy_context
+from marshy import dump, load
 from marshy.factory.dataclass_marshaller_factory import dataclass_marshaller
 from marshy.marshaller.bool_marshaller import BoolMarshaller
 from marshy.marshaller.obj_marshaller import ObjMarshaller, attr_config
@@ -12,6 +12,7 @@ from marshy.marshaller.primitive_marshaller import (
     IntMarshaller,
     FloatMarshaller,
 )
+from marshy.marshy_context import create_marshy_context
 
 # This is a little bit strange, but for these forward references we have to include the full name or there will be no
 # way to resolve it later
@@ -119,7 +120,7 @@ class TestMarshallObj(TestCase):
         """
         Test Marshaller which capitalizes the attribute name for ID
         """
-        context = marshy_context()
+        context = create_marshy_context()
         context.register_marshaller(
             dataclass_marshaller(
                 Customer,
@@ -129,8 +130,10 @@ class TestMarshallObj(TestCase):
             )
         )
         customer = Customer("some-id", "Some Name")
+        # noinspection PyTestUnpassedFixture
         dumped = context.dump(customer)
         assert "ID" in dumped
         assert "id" not in dumped
+        # noinspection PyTestUnpassedFixture
         loaded = context.load(Customer, dumped)
         assert customer == loaded

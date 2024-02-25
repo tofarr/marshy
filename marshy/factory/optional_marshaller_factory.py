@@ -21,6 +21,7 @@ class OptionalMarshallerFactory(MarshallerFactoryABC):
         if origin == Union:
             optional_type = get_optional_type(type_)
             if optional_type:
+                # noinspection PyTypeChecker
                 return OptionalMarshaller[optional_type](
                     context.get_marshaller(optional_type)
                 )

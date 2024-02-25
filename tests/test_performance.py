@@ -2,21 +2,22 @@ from unittest import TestCase
 
 
 class TestMarshallUuid(TestCase):
+    # noinspection GrazieInspection
     """
-        This just adds code coverage and makes sure the performance fixtures are working as expected
-        Actual performance tests can be run from the command line like so:
+    This just adds code coverage and makes sure the performance fixtures are working as expected
+    Actual performance tests can be run from the command line like so:
 
         python -m timeit [-n N] [-r N] [-u U] [-s S] [-h] [statement ...]
 
-    python -m timeit -s "
-    from test.performance.marshmallow_performance import run
-    run(1000)
-    "
+        python -m timeit -s "
+        from test.performance.marshmallow_performance import run
+        run(1000)
+        "
 
-    python -m timeit -s "
-    from test.performance.marshy_performance import run
-    run(1000)
-    "
+        python -m timeit -s "
+        from test.performance.marshy_performance import run
+        run(1000)
+        "
     """
 
     def test_marshall(self):

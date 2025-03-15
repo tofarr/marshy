@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
-from typing import List
+from typing import List  # noqa
 from unittest import TestCase
 
 from injecty import create_injecty_context
@@ -45,9 +45,9 @@ class TestImplMarshaller(TestCase):
         injecty_context.register_impls(PetAbc, [Cat, Dog])
         context = create_marshy_context(injecty_context=injecty_context)
         pets = [Cat("Felix"), Dog("Rover")]
-        dumped = context.dump(pets, List[PetAbc])
+        dumped = context.dump(pets, list[PetAbc])
         assert dumped == [["Cat", dict(name="Felix")], ["Dog", dict(name="Rover")]]
-        loaded = context.load(List[PetAbc], dumped)
+        loaded = context.load(list[PetAbc], dumped)
         assert pets == loaded
         vocalizations = [p.vocalize() for p in loaded]
         assert ["Meow!", "Woof!"] == vocalizations

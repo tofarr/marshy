@@ -10,7 +10,7 @@ from marshy.marshaller.union_marshaller import implementation_marshaller
 class TestMarshallIterable(TestCase):
     def test_marshall(self):
         values = [True, None, 1, "Mix"]
-        type_ = List[Union[bool, int, type(None), str]]
+        type_ = list[Union[bool, int, type(None), str]]
         dumped = dump(values, type_)
         assert dumped == [
             ["bool", True],
@@ -22,7 +22,7 @@ class TestMarshallIterable(TestCase):
         assert values == loaded
 
     def test_marshall_nested(self):
-        type_ = Union[List[str], int]
+        type_ = Union[list[str], int]
         dumped = dump(["a", "b"], type_)
         assert dumped == ["list", ["a", "b"]]
         loaded = load(type_, dumped)

@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import TypeVar, Optional, Dict, Type, List, Iterable
+from typing import TypeVar, Optional, Type, Iterable
 
 from marshy import ExternalType
 from marshy.marshaller.deferred_marshaller import DeferredMarshaller
@@ -16,8 +16,8 @@ class UnionMarshaller(MarshallerABC[T]):
     """
 
     marshalled_type: T
-    marshallers_by_name: Dict[str, MarshallerABC[T]]
-    names_by_type: Dict[Type, str] = field(default_factory=dict)
+    marshallers_by_name: dict[str, MarshallerABC[T]]
+    names_by_type: dict[Type, str] = field(default_factory=dict)
 
     def __post_init__(self):
         self.names_by_type.update(
@@ -27,13 +27,13 @@ class UnionMarshaller(MarshallerABC[T]):
             }
         )
 
-    def load(self, item: List[ExternalType]) -> T:
+    def load(self, item: list[ExternalType]) -> T:
         type_name = item[0]
         marshaller = self.marshallers_by_name[type_name]
         loaded = marshaller.load(item[1])
         return loaded
 
-    def dump(self, item: Optional[T]) -> List[ExternalType]:
+    def dump(self, item: Optional[T]) -> list[ExternalType]:
         type_name = self.names_by_type[item.__class__]
         marshaller = self.marshallers_by_name[type_name]
         dumped = marshaller.dump(item)

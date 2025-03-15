@@ -6,7 +6,7 @@ ExternalType = Union[
     bool,
     int,
     float,
-    List["marshy.types.ExternalType"],
+    list["marshy.types.ExternalType"],
     "marshy.types.ExternalItemType",
 ]
-ExternalItemType = Dict[str, ExternalType]
+ExternalItemType = dict[str, ExternalType]

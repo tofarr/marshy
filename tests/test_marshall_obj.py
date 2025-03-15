@@ -24,7 +24,7 @@ class Customer:
     id: str
     full_name: str
     address: Optional[str] = None
-    purchases: Optional[List[PurchaseTypeName]] = None
+    purchases: Optional[list[PurchaseTypeName]] = None
 
 
 @dataclass
@@ -33,7 +33,7 @@ class Product:
     title: str
     description: Optional[str] = None
     weight_in_kg: Optional[float] = None
-    purchases: Optional[List[PurchaseTypeName]] = None
+    purchases: Optional[list[PurchaseTypeName]] = None
 
 
 @dataclass
@@ -60,7 +60,7 @@ class TestMarshallObj(TestCase):
                 ),
             ),
         )
-        value: Dict[str, Any] = dict(i=10, s="foo", f=12.2, b=True, n=None)
+        value: dict[str, Any] = dict(i=10, s="foo", f=12.2, b=True, n=None)
         dumped = marshaller.dump(value)
         assert "n" not in dumped
         loaded = marshaller.load(dumped)
@@ -78,7 +78,7 @@ class TestMarshallObj(TestCase):
                 attr_config(OptionalMarshaller(IntMarshaller()), "n"),
             ),
         )
-        value: Dict[str, Any] = dict(i=10, s="foo", f=12.2, b=True, n=None)
+        value: dict[str, Any] = dict(i=10, s="foo", f=12.2, b=True, n=None)
         dumped = marshaller.dump(value)
         assert "n" in dumped
         loaded = marshaller.load(dumped)

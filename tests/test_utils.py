@@ -1,4 +1,4 @@
-from typing import Union, Optional, Dict
+from typing import Union, Optional
 from unittest import TestCase
 
 from marshy.errors import MarshallError
@@ -23,6 +23,6 @@ class TestResolveForwardRefs(TestCase):
             resolve_forward_refs(Optional["NotARealClassName"])
 
     def test_dict(self):
-        type_ = Dict[str, "unittest.TestCase"]
+        type_ = dict[str, "unittest.TestCase"]
         type_ = resolve_forward_refs(type_)
-        assert type_ == Dict[str, TestCase]
+        assert type_ == dict[str, TestCase]

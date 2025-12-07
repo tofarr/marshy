@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Iterable, List, Callable, Iterator
+from typing import TypeVar, Iterable, Callable, Iterator
 
 from marshy import ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
@@ -17,10 +17,10 @@ class IterableMarshaller(MarshallerABC[Iterable[T]]):
     item_marshaller: MarshallerABC[T]
     constructor: Callable[[Iterator[T]], Iterable[T]] = list
 
-    def load(self, item: List[ExternalType]) -> Iterable[T]:
+    def load(self, item: list[ExternalType]) -> Iterable[T]:
         loaded = self.constructor(self.item_marshaller.load(i) for i in item)
         return loaded
 
-    def dump(self, item: Iterable[T]) -> List[ExternalType]:
+    def dump(self, item: Iterable[T]) -> list[ExternalType]:
         dumped = [self.item_marshaller.dump(i) for i in item]
         return dumped

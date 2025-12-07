@@ -109,10 +109,10 @@ class DatasetMarshaller(MarshallerABC[Dataset]):
         else:
             # noinspection PyTypeChecker
             coordinates = item["coords"]
-        return Dataset(context.load(List[Coordinate], coordinates))
+        return Dataset(context.load(list[Coordinate], coordinates))
 
     def dump(self, item: Dataset) -> ExternalType:
-        dumped = dict(coords=context.dump(item.coordinates, List[Coordinate]))
+        dumped = dict(coords=context.dump(item.coordinates, list[Coordinate]))
         if item.coordinates:
             dumped["mean"] = context.dump(item.calculate_mean(), Coordinate)
             dumped["median"] = context.dump(item.calculate_median(), Coordinate)

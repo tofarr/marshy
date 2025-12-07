@@ -14,7 +14,7 @@ class Node:
     id: str
     # The fact that Node references itself means we need deferred resolution of the marshaller
     # Since it will also reference itself
-    children: Optional[List[NodeTypeName]] = None
+    children: Optional[list[NodeTypeName]] = None
 
 
 class TestMarshallDeferred(TestCase):

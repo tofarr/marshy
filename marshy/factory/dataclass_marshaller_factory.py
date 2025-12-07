@@ -1,6 +1,6 @@
 import dataclasses
 import inspect
-from typing import Type, Optional, List, get_type_hints, Tuple
+from typing import Type, Optional, get_type_hints, Tuple
 
 from marshy.errors import MarshallError
 from marshy.factory.marshaller_factory_abc import MarshallerFactoryABC
@@ -30,8 +30,8 @@ class DataclassMarshallerFactory(MarshallerFactoryABC):
 def get_property_configs_for_type(
     type_: Type,
     context: MarshyContext,
-    include: Optional[List[str]] = None,
-    exclude: Optional[List[str]] = None,
+    include: Optional[list[str]] = None,
+    exclude: Optional[list[str]] = None,
     exclude_dumped_values: Tuple = DataclassMarshallerFactory.exclude_dumped_values,
 ):
     property_configs = []
@@ -58,7 +58,7 @@ def get_property_configs_for_type(
     return property_configs
 
 
-def skip(name: str, include: Optional[List[str]], exclude: Optional[List[str]]) -> bool:
+def skip(name: str, include: Optional[list[str]], exclude: Optional[list[str]]) -> bool:
     if include is not None and name not in include:
         return True
     if exclude is not None and name in exclude:
@@ -70,8 +70,8 @@ def skip(name: str, include: Optional[List[str]], exclude: Optional[List[str]]) 
 def get_attr_configs_for_type(
     type_: Type,
     context: MarshyContext,
-    include: Optional[List[str]] = None,
-    exclude: Optional[List[str]] = None,
+    include: Optional[list[str]] = None,
+    exclude: Optional[list[str]] = None,
     exclude_dumped_values: Tuple = (None,),
 ):
     # noinspection PyDataclass
@@ -105,10 +105,10 @@ def get_attr_configs_for_type(
 def dataclass_marshaller(
     type_: Type,
     context: MarshyContext,
-    custom_attr_configs: Optional[List[AttrConfig]] = None,
-    custom_property_configs: Optional[List[PropertyConfig]] = None,
-    include: Optional[List[str]] = None,
-    exclude: Optional[List[str]] = None,
+    custom_attr_configs: Optional[list[AttrConfig]] = None,
+    custom_property_configs: Optional[list[PropertyConfig]] = None,
+    include: Optional[list[str]] = None,
+    exclude: Optional[list[str]] = None,
     exclude_dumped_values: Tuple = (None,),
 ):
     exclude_list = exclude or []

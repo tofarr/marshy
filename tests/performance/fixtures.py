@@ -21,7 +21,7 @@ class Product:
     weight_in_kg: Optional[float] = None
     number_in_stock: Optional[int] = None
     active: bool = False
-    tags: List[Tag] = field(default_factory=list)
+    tags: list[Tag] = field(default_factory=list)
 
 
 product = Product(

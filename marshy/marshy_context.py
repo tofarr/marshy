@@ -14,8 +14,8 @@ T = TypeVar("T")
 
 @dataclass
 class MarshyContext:
-    marshallers_by_type: Dict[Type, MarshallerABC] = field(default_factory=dict)
-    factories: List[MarshallerFactoryABC] = field(default_factory=list)
+    marshallers_by_type: dict[Type, MarshallerABC] = field(default_factory=dict)
+    factories: list[MarshallerFactoryABC] = field(default_factory=list)
     injecty_context: Optional[InjectyContext] = field(
         default_factory=get_default_injecty_context
     )

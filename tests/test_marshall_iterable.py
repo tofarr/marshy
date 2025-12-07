@@ -8,8 +8,8 @@ from marshy.errors import MarshallError
 class TestMarshallIterable(TestCase):
     def test_marshall(self):
         values = list(range(10))
-        dumped = dump(values, List[int])
-        loaded = load(List[int], dumped)
+        dumped = dump(values, list[int])
+        loaded = load(list[int], dumped)
         assert values == loaded
 
     def test_marshall_set(self):
@@ -20,7 +20,7 @@ class TestMarshallIterable(TestCase):
 
     def test_dump(self):
         values = [True, None, 1, "Mix"]
-        type_ = List[Union[bool, int, type(None), str]]
+        type_ = list[Union[bool, int, type(None), str]]
         dumped = dump(values, type_)
         loaded = load(type_, dumped)
         assert values == loaded

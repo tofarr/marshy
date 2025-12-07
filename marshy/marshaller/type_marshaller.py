@@ -14,8 +14,8 @@ class TypeMarshaller(MarshallerABC[Type]):
 
     marshalled_type: Type = Type
     permitted_prefixes: Iterable[str] = field(default_factory=tuple)
-    _names_to_types: Dict[str, Type] = field(default_factory=dict)
-    _types_to_names: Dict[Type, str] = None
+    _names_to_types: dict[str, Type] = field(default_factory=dict)
+    _types_to_names: dict[Type, str] = None
 
     def __post_init__(self):
         types_to_names = {t: n for n, t in self._names_to_types.items()}

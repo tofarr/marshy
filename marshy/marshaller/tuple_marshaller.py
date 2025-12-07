@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Iterable, List, Tuple, Union, Type
+from typing import TypeVar, Iterable, Tuple, Union, Type
 
 from marshy.types import ExternalItemType, ExternalType
 from marshy.marshaller.marshaller_abc import MarshallerABC
@@ -16,7 +16,7 @@ class TupleMarshaller(MarshallerABC[Iterable[T]]):
     marshalled_type: Type
     item_marshallers: Tuple[MarshallerABC[T], ...]
 
-    def load(self, item: Union[List[ExternalType], ExternalItemType]) -> Iterable[T]:
+    def load(self, item: Union[list[ExternalType], ExternalItemType]) -> Iterable[T]:
         if isinstance(item, dict):
             loaded = tuple(
                 m.load(item[f"t{i}"]) for i, m in enumerate(self.item_marshallers)
@@ -25,6 +25,6 @@ class TupleMarshaller(MarshallerABC[Iterable[T]]):
         loaded = tuple(m.load(i) for m, i in zip(self.item_marshallers, item))
         return loaded
 
-    def dump(self, item: Iterable[T]) -> List[ExternalType]:
+    def dump(self, item: Iterable[T]) -> list[ExternalType]:
         dumped = [m.dump(i) for m, i in zip(self.item_marshallers, item)]
         return dumped

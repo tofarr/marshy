@@ -10,7 +10,7 @@ from marshy import dump, load
 @dataclass
 class Nested:
     title: str
-    children: List[Nested] = field(default_factory=list)
+    children: list[Nested] = field(default_factory=list)
 
 
 @dataclass

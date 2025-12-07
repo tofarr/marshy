@@ -17,7 +17,7 @@ class AttrConfig:
     exclude_dumped_values: Tuple = ()
 
 
-# pylint: disable=R0913
+# pylint: disable=R0913,R0917
 def attr_config(
     marshaller: MarshallerABC,
     internal_name: str,

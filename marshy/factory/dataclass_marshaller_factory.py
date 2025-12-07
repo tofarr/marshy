@@ -101,6 +101,7 @@ def get_attr_configs_for_type(
     return attr_configs
 
 
+# pylint: disable=R0917
 def dataclass_marshaller(
     type_: Type,
     context: MarshyContext,

@@ -7,37 +7,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.X
-        uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.X"
-      - name: Install black
-        run: python -m pip install --upgrade pip black
+          version: "latest"
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Install dependencies
+        run: uv sync --extra dev
       - name: black
-        run: black . --check
+        run: uv run black . --check
 
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.X
-        uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.X"
-      - name: Install pytest code coverage
-        run: python -m pip install ".[dev]"
+          version: "latest"
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Install dependencies
+        run: uv sync --extra dev
       - name: testcoverage
-        run: python -m pytest -n auto --cov-report=term-missing --cov=tests --cov=marshy --cov=injecty_config_marshy --cov-fail-under=100
+        run: uv run python -m pytest -n auto --cov-report=term-missing --cov=tests --cov=marshy --cov=injecty_config_marshy --cov-fail-under=100
 
   pylint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.X
-        uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          python-version: "3.X"
-      - name: Install pylint
-        run: python -m pip install ".[dev]"
+          version: "latest"
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Install dependencies
+        run: uv sync --extra dev
       - name: lint
-        run: pylint marshy injecty_config_marshy
+        run: uv run pylint marshy injecty_config_marshy
